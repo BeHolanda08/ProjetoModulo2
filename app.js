@@ -6,10 +6,12 @@ const mongoose = require('mongoose');
 // const session = require('express-session');
 const app = express();
 
-const url = 'mongodb+srv://usuario_gledson:bemito123@clusterbe-rrue3.mongodb.net/test?retryWrites=true&w=majority';
-const options = {
-  reconnectTries: Number.MAX_VALUE, reconnectInterval: 500, poolSize: 5, useNewUrlParser: true, useUnifiedTopology: true };
+// MongoBD Atlas
 
+const url = 'mongodb+srv://usuario_mj:Modjobs123@clusterbe-rrue3.mongodb.net/test?retryWrites=true&w=majority';
+const options = { reconnectTries: Number.MAX_VALUE, reconnectInterval: 500, poolSize: 5, useNewUrlParser: true, useUnifiedTopology: true };
+
+// Mongoose
 
 mongoose.connect(url, options);
 mongoose.set('useCreatIndex', true);
@@ -19,7 +21,7 @@ mongoose.connection.on('error', (err) => {
 });
 
 mongoose.connection.on('disconnected', () => {
-  console.log('Aplicação disconectada do banco de Dados!');
+  console.log('Aplicação desconectada do banco de Dados!');
 });
 
 mongoose.connection.on('connected', () => {
