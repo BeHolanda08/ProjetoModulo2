@@ -1,11 +1,35 @@
 require('dotenv').config();
 
 const express = require('express');
-// const bodyParser = require('body-parser');
-// const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 // const session = require('express-session');
-
 const app = express();
+
+const url = 'mongodb+srv://usuario_gledson:bemito123@clusterbe-rrue3.mongodb.net/test?retryWrites=true&w=majority';
+const options = {
+  reconnectTries: Number.MAX_VALUE, reconnectInterval: 500, poolSize: 5, useNewUrlParser: true, useUnifiedTopology: true };
+
+
+mongoose.connect(url, options);
+mongoose.set('useCreatIndex', true);
+
+mongoose.connection.on('error', (err) => {
+  console.log(`Erro na conexão com o banco de Dados: ${err}`);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('Aplicação disconectada do banco de Dados!');
+});
+
+mongoose.connection.on('connected', () => {
+  console.log('Aplicação conectada com o banco de Dados!');
+});
+
+// Body-Parser
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   res.render('index');
@@ -30,3 +54,6 @@ app.listen(3000, () => {
 app.set('views', `${__dirname}/views`);
 
 app.set('view engine', 'hbs');
+
+
+module.exports = app;
