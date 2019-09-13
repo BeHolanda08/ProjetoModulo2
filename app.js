@@ -3,12 +3,13 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const Candidate = require('./models/Candidate');
 // const session = require('express-session');
 const app = express();
 
 // MongoBD Atlas
 
-const url = 'mongodb+srv://usuario_mj:Modjobs123@clusterbe-rrue3.mongodb.net/test?retryWrites=true&w=majority';
+const url = process.env.DB_HOST;
 const options = { reconnectTries: Number.MAX_VALUE, reconnectInterval: 500, poolSize: 5, useNewUrlParser: true, useUnifiedTopology: true };
 
 // Mongoose
@@ -37,16 +38,43 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.get('/cadastro', (req, res) => {
-  res.render('cadastro');
+app.get('/signUp', (req, res) => {
+  res.render('signUp');
+});
+
+app.get('/signUpCandidate', (req, res) => {
+  res.render('signUpCandidate');
+});
+
+app.post('/signUpCandidate', async (req, res) => {
+  const { name, email, password, surname, celPhone } = req.body;
+  // validação de candidato
+  if (name === '' || email === '' || password === '' || surname === '' || celPhone === '') {
+    res.render('signupCandidate', { errorMessage: 'Please fill all required fields!' });
+  }
+
+  const newCandidate = new Candidate ({ name, email, password, surname, celPhone });
+  console.log(newCandidate);
+
+  try {
+    await newCandidate.save(); 
+    res.redirect('/');
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
+app.get('/signUpCompany', (req, res) => {
+  res.render('signUpCompany');
 });
 
 app.get('/home', (req, res) => {
   res.render('home');
 });
 
-app.get('/esqueciSenha', (req, res) => {
-  res.render('esqueciSenha');
+app.get('/forgotPassword', (req, res) => {
+  res.render('forgotPassword');
 });
 
 app.listen(3000, () => {
