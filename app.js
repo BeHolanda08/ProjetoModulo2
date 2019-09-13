@@ -4,6 +4,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Candidate = require('./models/Candidate');
+const Company = require('./models/Company');
+
 // const session = require('express-session');
 const app = express();
 
@@ -48,14 +50,13 @@ app.get('/signUpCandidate', (req, res) => {
 
 app.post('/signUpCandidate', async (req, res) => {
   const { name, email, password, surname, celPhone } = req.body;
+
   // validação de candidato
   if (name === '' || email === '' || password === '' || surname === '' || celPhone === '') {
     res.render('signupCandidate', { errorMessage: 'Please fill all required fields!' });
   }
 
-  const newCandidate = new Candidate ({ name, email, password, surname, celPhone });
-  console.log(newCandidate);
-
+  const newCandidate = new Candidate({ name, email, password, surname, celPhone });
   try {
     await newCandidate.save(); 
     res.redirect('/');
@@ -68,6 +69,25 @@ app.post('/signUpCandidate', async (req, res) => {
 app.get('/signUpCompany', (req, res) => {
   res.render('signUpCompany');
 });
+
+app.post('/signUpCompany', async (req, res) => {
+  const { name, phone, email, password } = req.body;
+
+  // validação de candidato
+  if (name === '' || phone === '' || email === '' || password === '') {
+    res.render('signUpCompany', { errorMessage: 'Please fill all required fields!' });
+  }
+
+  const newCompany = new Company({ name, phone, email, password });
+
+  try {
+    await newCompany.save();
+    res.redirect('/');
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 
 app.get('/home', (req, res) => {
   res.render('home');
