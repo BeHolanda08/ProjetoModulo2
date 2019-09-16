@@ -44,6 +44,10 @@ app.get('/signUp', (req, res) => {
   res.render('signUp');
 });
 
+app.get('/home', (req, res) => {
+  res.render('home');
+});
+
 app.get('/signUpCandidate', (req, res) => {
   res.render('signUpCandidate');
 });
@@ -88,13 +92,16 @@ app.post('/signUpCompany', async (req, res) => {
   }
 });
 
-
-app.get('/home', (req, res) => {
-  res.render('home');
-});
-
 app.get('/forgotPassword', (req, res) => {
   res.render('forgotPassword');
+});
+
+app.post('/forgotPassword', (req, res) => {
+  return res.render('forgotPassword', { errorMessage: 'Please fill all required fields!' });
+});
+
+app.get('/passwordSubmission', (req, res) => {
+  res.render('passwordSubmission');
 });
 
 app.listen(3000, () => {
