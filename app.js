@@ -3,9 +3,9 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const Candidate = require('./models/Candidate');
 const Company = require('./models/Company');
-const bcrypt = require('bcrypt');
 
 // const session = require('express-session');
 const app = express();
@@ -16,7 +16,8 @@ const saltRounds = 10;
 
 const url = process.env.DB_HOST;
 const options = {
-  reconnectTries: Number.MAX_VALUE, reconnectInterval: 500, poolSize: 5, useNewUrlParser: true, useUnifiedTopology: true };
+  reconnectTries: Number.MAX_VALUE, reconnectInterval: 500, poolSize: 5, useNewUrlParser: true, useUnifiedTopology: true 
+};
 
 // Mongoose
 
@@ -47,25 +48,31 @@ app.get('/', (req, res) => {
 app.post('/', async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    res.render('index', { 
+    res.render('index', {
       errorMessage: 'Por favor, preencha todos os campos obrigatórios!' });
     return;
-}
-
-  const candidate = await Candidate.findOne({ email, password });
-  const company = await Company.findOne({ email, password });
-
-
-  if (!candidate) {
-    console.log(candidate);
-    res.render('index', { errorMessage: "The username doesn't exist." });
-    return;
   }
-  if (bcrypt.compareSync(password, candidate.password)) {
-    // req.session.currentUser = candidate;
-    res.redirect('/home');
+
+  const candidate = await Candidate.findOne({ email });
+  const company = await Company.findOne({ email });
+
+  if (candidate) {
+    if (bcrypt.compareSync(password, candidate.password)) {
+      res.redirect('home');
+    } else {
+      res.render('index', { error: 'Senha incorreta.' });
+      return;
+    }
+  }
+  else if (company) {
+    if (bcrypt.compareSync(password, company.password)) {
+      res.redirect('home');
+    } else {
+      res.render('index', { error: 'Senha incorreta.' });
+      return;
+    }
   } else {
-    res.render('/', { errorMessage: 'Incorrect password' });
+    res.render('index', { error: 'Senha incorreta.' });
   }
 });
 
@@ -82,7 +89,9 @@ app.get('/signUpCandidate', (req, res) => {
 });
 
 app.post('/signUpCandidate', async (req, res) => {
-  const { name, email, password, surname, celPhone } = req.body;
+  const {
+ name, email, password, surname, celPhone 
+} = req.body;
 
   // validação de candidate
   if (!name || !email || !password || !surname || !celPhone) {
@@ -96,7 +105,9 @@ app.post('/signUpCandidate', async (req, res) => {
   try {
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
-    const newCandidate = new Candidate({ name, email, password: hash, surname, celPhone });
+    const newCandidate = new Candidate({
+ name, email, password: hash, surname, celPhone 
+});
     await newCandidate.save();
     res.redirect('/');
   } catch (error) {
@@ -110,7 +121,9 @@ app.get('/signUpCompany', (req, res) => {
 });
 
 app.post('/signUpCompany', async (req, res) => {
-  const { name, phone, email, password } = req.body;
+  const {
+ name, phone, email, password 
+} = req.body;
 
   // validação de company
   if (!name || !phone || !email || !password) {
@@ -124,7 +137,9 @@ app.post('/signUpCompany', async (req, res) => {
   try {
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
-    const newCompany = new Company({ name, phone, email, password: hash });
+    const newCompany = new Company({
+ name, phone, email, password: hash 
+});
     await newCompany.save();
     res.redirect('/');
   } catch (error) {
