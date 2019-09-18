@@ -9,11 +9,17 @@
 <body>
     <div>
         <h1>ModJobs</h1>
-        <form action="/">
-        <input type="text" name="user" placeholder="Usuário">
+        <form action="/" method="POST">
+        <input type="text" name="email" placeholder="email">
         <input type="password" name="password" placeholder="Senha">
         <a href="/forgotPassword">Esqueci Minha Senha</a>
-        <a href="/home">Entrar</a>
+        <br>
+
+  {{#if errorMessage}}
+    <p>{{errorMessage}}</p>
+  {{/if}}
+  
+  <button class="crazy-button" type="submit">Entrar</button>
         <a href="/signUp">Cadastrar</a>
         </form>
     </div>
