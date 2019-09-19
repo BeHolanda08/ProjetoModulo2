@@ -3,20 +3,21 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const Candidate = require('./models/Candidate');
-const Company = require('./models/Company');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const authRouter = require('./routes/auth-routes');
+const privateRoutes = require('./routes/private-routes');
 
-// const session = require('express-session');
 const app = express();
-
-const saltRounds = 10;
 
 // MongoBD Atlas
 
 const url = process.env.DB_HOST;
 const options = {
-  reconnectTries: Number.MAX_VALUE, reconnectInterval: 500, poolSize: 5, useNewUrlParser: true, useUnifiedTopology: true 
+  // eslint-disable-next-line max-len
+  reconnectTries: Number.MAX_VALUE, reconnectInterval: 500, poolSize: 5, useNewUrlParser: true, useUnifiedTopology: true,
 };
 
 // Mongoose
@@ -36,134 +37,45 @@ mongoose.connection.on('connected', () => {
   console.log('Aplicação conectada com o banco de Dados!');
 });
 
+app.set('views', `${__dirname}/views`);
+app.set('view engine', 'hbs');
+
 // Body-Parser
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(logger('dev'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
-app.get('/', (req, res) => {
-  res.render('index');
-});
 
-app.post('/', async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    res.render('index', {
-      errorMessage: 'Por favor, preencha todos os campos obrigatórios!' });
-    return;
-  }
+app.use(session({
+  secret: 'auth-secret',
+  cookie: { maxAge: 50000 },
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection,
+    ttl: 24 * 60 * 60,
+  }),
+  proxy: true,
+  resave: true,
+  saveUninitialized: true,
+}));
 
-  const candidate = await Candidate.findOne({ email });
-  const company = await Company.findOne({ email });
+app.use('/', authRouter);
 
-  if (candidate) {
-    if (bcrypt.compareSync(password, candidate.password)) {
-      res.redirect('home');
-    } else {
-      res.render('index', { error: 'Senha incorreta.' });
-      return;
-    }
-  }
-  else if (company) {
-    if (bcrypt.compareSync(password, company.password)) {
-      res.redirect('home');
-    } else {
-      res.render('index', { error: 'Senha incorreta.' });
-      return;
-    }
+// Protected Routes Middleware
+app.use((req, res, next) => {
+  if (req.session.currentUser) {
+    next();
   } else {
-    res.render('index', { error: 'Senha incorreta.' });
-  }
-});
-
-app.get('/signUp', (req, res) => {
-  res.render('signUp');
-});
-
-app.get('/home', (req, res) => {
-  res.render('home');
-});
-
-app.get('/signUpCandidate', (req, res) => {
-  res.render('signUpCandidate');
-});
-
-app.post('/signUpCandidate', async (req, res) => {
-  const {
- name, email, password, surname, celPhone 
-} = req.body;
-
-  // validação de candidate
-  if (!name || !email || !password || !surname || !celPhone) {
-    return res.send('signupCandidate', { errorMessage: 'Por favor, preencha todos os campos obrigatórios!' });
-  }
-
-  if (await Candidate.findOne({ email })) {
-    return res.send({ error: 'Usuário já cadastrado!' });
-  }
-
-  try {
-    const salt = bcrypt.genSaltSync(saltRounds);
-    const hash = bcrypt.hashSync(password, salt);
-    const newCandidate = new Candidate({
- name, email, password: hash, surname, celPhone 
-});
-    await newCandidate.save();
+    console.log('cagou tudo');
     res.redirect('/');
-  } catch (error) {
-    console.log(error, 'Erro de Login!');
   }
 });
 
-
-app.get('/signUpCompany', (req, res) => {
-  res.render('signUpCompany');
-});
-
-app.post('/signUpCompany', async (req, res) => {
-  const {
- name, phone, email, password 
-} = req.body;
-
-  // validação de company
-  if (!name || !phone || !email || !password) {
-    res.send('signUpCompany', { errorMessage: 'Por favor, preencha todos os campos Obrigatórios!' });
-  }
-
-  if (await Company.findOne({ email })) {
-    return res.send({ error: 'Empresa já cadastrado!' });
-  }
-
-  try {
-    const salt = bcrypt.genSaltSync(saltRounds);
-    const hash = bcrypt.hashSync(password, salt);
-    const newCompany = new Company({
- name, phone, email, password: hash 
-});
-    await newCompany.save();
-    res.redirect('/');
-  } catch (error) {
-    console.log(error, 'Erro de Login!');
-  }
-});
-
-app.get('/forgotPassword', (req, res) => {
-  res.render('forgotPassword');
-});
-
-app.post('/forgotPassword', (req, res) => res.render('forgotPassword', { errorMessage: 'Please fill all required fields!' }));
-
-app.get('/passwordSubmission', (req, res) => {
-  res.render('passwordSubmission');
-});
+app.use('/', privateRoutes);
 
 app.listen(3000, () => {
   console.log('Express rodando');
 });
-
-app.set('views', `${__dirname}/views`);
-
-app.set('view engine', 'hbs');
-
 
 module.exports = app;
