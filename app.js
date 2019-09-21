@@ -67,8 +67,7 @@ app.use((req, res, next) => {
   if (req.session.currentUser) {
     next();
   } else {
-    console.log('cagou tudo');
-    res.redirect('/');
+      res.redirect('/');
   }
 });
 

@@ -115,6 +115,7 @@ router.get('/passwordSubmission', (req, res) => {
   res.render('passwordSubmission');
 });
 
+
 router.get('/logout', (req, res) => {
   req.session.destroy((error) => {
     if (error) {

@@ -9,12 +9,18 @@ const candidateSchema = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   image: String,
+  imagePerfil: String,
+  skills: String,
   address: String,
   number: Number,
   complement: String,
   city: String,
   state: String,
   zipCode: Number,
+  linkFace: String,
+  linkInsta: String,
+  linkedin: String,
+  gitHub: String,
 });
 
 const Candidate = mongoose.model('Candidate', candidateSchema);

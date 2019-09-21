@@ -8,6 +8,8 @@ const companySchema = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   image: String,
+  imagePerfil: String,
+  skills: String,
   address: String,
   number: Number,
   complement: String,
