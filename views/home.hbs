@@ -9,6 +9,26 @@
 <body>
 
 <h1>Pagina principal aqui</h1>
+<form action="/post" class="container-addPost" method="POST">
+    <input type="text" name="url" placeholder="Insira a url da imagem/vídeo">
+    <textarea name="message" placeholder="Entre com a mensagem"></textarea>
+    <button type="submit">Enviar</button>
+</form>
+  {{#if errorMessage}}
+    <p>{{errorMessage}}</p>
+  {{/if}}
+
+<hr>
+<h3>Todos os Posts</h3>
+{{#each allPosts}}
+<div class="post-container">
+  <video width="320" height="240" controls>
+    <source src={{url}} type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <p>{{message}}</p>
+</div>
+{{/each}}
 <a href="/">Logout</a>
 </body>
 </html>
