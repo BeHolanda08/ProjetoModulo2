@@ -1,19 +1,21 @@
 <div>
-  <img src={{imagePerfil}} alt={{name}}>
-  <img src={{ image }} alt="Foto de capa">
+  <img src={{ perfil.imagePerfil }} alt={{ perfil.name }}>
+  <img src={{ perfil.image }} alt="Foto de capa">
 
     <h2>Informações Profissionais</h2>
 
     <ul>
-      {{city}}
-      {{state}}
-      {{description}}
-      {{skills}}
-      {{linkdin}}
-      {{linkInsta}}
-      {{linkFace}}
-      {{gitHub}}
+      <li>{{ perfil.name }}</li>
+      <li>{{ perfil.city }}</li>
+       <li>{{ perfil.state }}</li>
+       <li>{{ perfil.description }}</li>
+       <li>{{ perfil.skills }}</li>
+       <li>{{ perfil.link1 }}</li>
+       <li>{{ perfil.link2 }}</li>
+       <li>{{ perfil.link3 }}</li>
+       <li>{{ perfil.link4 }}</li>
     </ul>
-
-  <button class="button-1" type="button"><a href="/editPefil">Editar!</a></button>
-</div>
+</form>
+  <a href="/update-perfil-candidate">Editar perfil</a>
+  <a href="/home">Home</a>
+</div>  

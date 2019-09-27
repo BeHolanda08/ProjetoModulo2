@@ -7,7 +7,9 @@ const candidateSchema = new Schema({
   surname: { type: String, required: true },
   celPhone: { type: Number, required: true },
   email: { type: String, required: true },
+
   password: { type: String, required: true },
+
   image: String,
   imagePerfil: String,
   skills: String,
@@ -17,10 +19,10 @@ const candidateSchema = new Schema({
   city: String,
   state: String,
   zipCode: Number,
-  linkFace: String,
-  linkInsta: String,
-  linkedin: String,
-  gitHub: String,
+  link1: String,
+  link2: String,
+  link3: String,
+  link4: String,
 });
 
 const Candidate = mongoose.model('Candidate', candidateSchema);

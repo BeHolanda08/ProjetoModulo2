@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ModJobs</title>
-</head>
-<body>
     <div>
-        <h1>ModJobs</h1>
+        <h1>MobJobs</h1>
         <p>Precisamos de alguns dados básicos</p>
         <form action="/signUpCandidate" method="POST">
         <label for="name">Nome</label>
@@ -20,9 +11,12 @@
         <label for="email">Email</label>
         <input type="text" name="email" placeholder="Esse será seu login">
         <label for="password">Senha</label>
-        <input type="text" name="password" placeholder="Coloque sua Senha">
+        <input type="password" name="password" placeholder="Senha">
+        <label for="password">Senha</label>
+        <input type="password" name="password2" placeholder="Confirmar Senha">
         <button type="submit">Confirmar</button>
         </form>
+    {{#if errorMessage}}
+    <p>{{errorMessage}}</p>
+  {{/if}}
     </div>
-</body>
-</html>

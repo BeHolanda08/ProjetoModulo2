@@ -1,0 +1,41 @@
+    
+    <div>
+       <h1>MobJobs</h1>
+       <p>Cadastro Completo</p>
+
+       <li>{{ updatePerfil.name }}</li>
+       <li>{{ updatePerfil.surname }}</li>
+       <li>{{ updatePerfil.email }}</li>
+       <hr>
+
+        <form action="/update-perfil-candidate" method="POST">
+            <label for="image">Imagem Perfil</label>
+            <input type="file" name="image" placeholder="Imagem Perfil">
+            <label for="imagePerfil">Imagem Capa</label>
+            <input type="file" name="imagePerfil" placeholder="Imagem Capa">
+            <label for="skills">Habilidades</label>
+            <input type="text" name="skills" placeholder="Habilidades">
+            <label for="address">Endereço</label>
+            <input type="text" name="address" placeholder="Endereço">
+            <label for="number">Número</label>
+            <input type="number" name="number" placeholder="Número">
+            <label for="complement">Complemento</label>
+            <input type="text" name="complement" placeholder="Complemento">
+            <label for="city">Cidade</label>
+            <input type="text" name="city" placeholder="Cidade">
+            <label for="state">Estado</label>
+            <input type="text" name="state" placeholder="Estado">
+            <label for="zipCode">Cep</label>
+            <input type="number" name="zipCode" placeholder="Cep">
+            <label for="link1">Link</label>
+            <input type="text" name="link1" placeholder="Linkedin">
+            <label for="link2">Link</label>
+            <input type="text" name="link2" placeholder="Link Intagram">
+            <label for="link3">Link</label>
+            <input type="text" name="link3" placeholder="Linke Facebook">
+            <label for="link4">Link</label>
+            <input type="text" name="link4" placeholder="GitHub">
+
+            <button type="submit">Confirmar</button>
+        </form>
+     </div>
