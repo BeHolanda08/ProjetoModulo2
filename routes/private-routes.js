@@ -3,7 +3,6 @@ const Candidate = require('../models/Candidate');
 const Post = require('../models/Post');
 const uploadCloud = require('../config/cloudinary.js');
 
-
 const router = express.Router();
 
 router.get('/home', async (req, res) => {
@@ -11,17 +10,23 @@ router.get('/home', async (req, res) => {
   res.render('home', { allPosts });
 });
 
-router.get('/perfil-candidate', async (req, res) => {
-  // eslint-disable-next-line no-underscore-dangle
-  const perfil = await Candidate.findById(req.session.currentUser._id);
-  res.render('perfilCandidate', { perfil });
-});
+router.get(
+  '/perfil-candidate',
+  uploadCloud.single('imageUrl'),
+  async (req, res) => {
+    // eslint-disable-next-line no-underscore-dangle
+    const perfil = await Candidate.findById(req.session.currentUser._id);
+    res.render('perfilCandidate', { perfil });
+  }
+);
 
 router.post('/post', uploadCloud.single('imageUrl'), async (req, res) => {
-  const { message } = req.body;
   const image = req.file.url;
+  const { message } = req.body;
   if (!image || !message) {
-    res.render('index', { errorMessage: 'Por favor, preencha todos os campos obrigatórios!' });
+    res.render('home', {
+      errorMessage: 'Por favor, preencha todos os campos obrigatórios!'
+    });
     return;
   }
 
@@ -34,11 +39,22 @@ router.post('/post', uploadCloud.single('imageUrl'), async (req, res) => {
   res.redirect('/home');
 });
 
-router.get('/update-perfil-candidate', async (req, res) => {
+router.get('/update-perfil-candidate/:editId', async (req, res) => {
   // eslint-disable-next-line no-underscore-dangle
-  res.render('perfilCandidateComplete', { updatePerfil });
+
+  const updatePerfil = await Candidate.findById(req.params.editId);
+  return res.render('perfilCandidateComplete', updatePerfil);
 });
 
+router.post('/update-perfil-candidate', async (req, res) => {
+  try {
+    await Candidate.findByIdAndUpdate(req.body._id, req.body);
+    return res.redirect('/perfil-candidate');
+  } catch (err) {
+    return res.render('error', {
+      errorMessage: `Erro ao editar Candidato: ${err}`
+    });
+  }
+});
 
 module.exports = router;
-

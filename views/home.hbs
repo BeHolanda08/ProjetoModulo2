@@ -1,34 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MobJobs</title>
-</head>
-<body>
-
 <h1>Pagina principal aqui</h1>
 <form action="/post" class="container-addPost" method="POST" enctype="multipart/form-data">
-    <input type="file" name="imageUrl" placeholder="Insira a url da imagem/vídeo">
-    <textarea name="message" placeholder="Entre com a mensagem"></textarea>
-    <button type="submit">Enviar</button>
+  <input type="file" name="imageUrl" placeholder="Insira imagem">
+  <textarea name="message" placeholder="Entre com a mensagem"></textarea>
+  <button type="submit">Enviar</button>
 </form>
-  {{#if errorMessage}}
-    <p>{{errorMessage}}</p>
-  {{/if}}
+{{#if errorMessage}}
+<p>{{errorMessage}}</p>
+{{/if}}
 
 <hr>
 <h3>Todos os Posts</h3>
 {{#each allPosts}}
 <div class="post-container">
-  <img width="320" height="240" controls>
-    <source src={{image}} type="image">
-    Your browser does not support the image tag.
-  </img>
-  <p>{{message}}</p>
+
+  <img src="{{ image }}" width="200" height="100">
+  <p>{{ message }}</p>
+  <a href="/post-delete">Excluir</a>
 </div>
 {{/each}}
+
 <a href="/">Logout</a>
 
 <a href="/perfil-candidate">Perfil Candidate</a>

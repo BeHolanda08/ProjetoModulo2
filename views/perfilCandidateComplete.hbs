@@ -1,41 +1,57 @@
-    
-    <div>
-       <h1>MobJobs</h1>
-       <p>Cadastro Completo</p>
+<div>
+    <h1>MobJobs</h1>
+    <p>Cadastro Completo</p>
 
-       <li>{{ updatePerfil.name }}</li>
-       <li>{{ updatePerfil.surname }}</li>
-       <li>{{ updatePerfil.email }}</li>
-       <hr>
+    <form action="/update-perfil-candidate" method="POST">
 
-        <form action="/update-perfil-candidate" method="POST">
-            <label for="image">Imagem Perfil</label>
-            <input type="file" name="image" placeholder="Imagem Perfil">
-            <label for="imagePerfil">Imagem Capa</label>
-            <input type="file" name="imagePerfil" placeholder="Imagem Capa">
-            <label for="skills">Habilidades</label>
-            <input type="text" name="skills" placeholder="Habilidades">
-            <label for="address">Endereço</label>
-            <input type="text" name="address" placeholder="Endereço">
-            <label for="number">Número</label>
-            <input type="number" name="number" placeholder="Número">
-            <label for="complement">Complemento</label>
-            <input type="text" name="complement" placeholder="Complemento">
-            <label for="city">Cidade</label>
-            <input type="text" name="city" placeholder="Cidade">
-            <label for="state">Estado</label>
-            <input type="text" name="state" placeholder="Estado">
-            <label for="zipCode">Cep</label>
-            <input type="number" name="zipCode" placeholder="Cep">
-            <label for="link1">Link</label>
-            <input type="text" name="link1" placeholder="Linkedin">
-            <label for="link2">Link</label>
-            <input type="text" name="link2" placeholder="Link Intagram">
-            <label for="link3">Link</label>
-            <input type="text" name="link3" placeholder="Link Facebook">
-            <label for="link4">Link</label>
-            <input type="text" name="link4" placeholder="GitHub">
+        <label for="text">Nome</label>
+        <input type="text" name="name" placeholder="Nome" value="{{ name }}">
 
-            <button type="submit">Confirmar</button>
-        </form>
-     </div>
+        <label for="text">Sobrenome</label>
+        <input type="text" name="surname" placeholder="Sobrenome" value="{{surname}}">
+
+        <label for="text">Email</label>
+        <input type="email" name="email" placeholder="exemplo@email.com" value="{{email}}">
+
+        <label for="text">Imagem Capa</label>
+        <input type="file" name="imageCapa" placeholder="Imagem Perfil" value="{{image}}">
+
+        <label for="text">Imagem Perfil</label>
+        <input type="file" name="imagePerfil" placeholder="Imagem Capa" value="{{imagePerfil}}">
+
+        <label for="text">Habilidades</label>
+        <input type="text" name="skills" placeholder="Habilidades" valeu="{{skills}}">
+
+        <label for="text">Endereço</label>
+        <input type="text" name="address" placeholder="Endereço" value="{{ address }}">
+
+        <label for="text">Número</label>
+        <input type="number" name="number" placeholder="Número" value="{{ number }}">
+
+        <label for="text">Complemento</label>
+        <input type="text" name="complement" placeholder="Complemento" value="{{ complement }}">
+
+        <label for="text">Cidade</label>
+        <input type="text" name="city" placeholder="Cidade" value="{{ city }}">
+
+        <label for="text">Estado</label>
+        <input type="text" name="state" placeholder="Estado" value="{{ state }}">
+
+        <label for="number">Cep</label>
+        <input type="number" name="zipCode" placeholder="Cep" value="{{ zipCode }}">
+
+        <label for="text">Link</label>
+        <input type="text" name="link1" placeholder="Linkedin" value="{{ link1 }}">
+
+        <label for="text">Link</label>
+        <input type="text" name="link2" placeholder="Link Intagram" value="{{ link2 }}">
+
+        <label for="text">Link</label>
+        <input type="text" name="link3" placeholder="Link Facebook" value="{{ link3 }}">
+
+        <label for="text">Link</label>
+        <input type="text" name="link4" placeholder="GitHub" value="{{ link4 }}">
+
+        <button type="submit">Confirmar</button>
+    </form>
+</div>

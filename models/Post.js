@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 const postSchema = new Schema({
   image: { type: String, required: true },
   message: { type: String, required: true },
-  authorId: { type: String, required: true },
+  authorId: { type: String, required: true }
 });
 
 const Post = mongoose.model('Post', postSchema);

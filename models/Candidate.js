@@ -7,10 +7,8 @@ const candidateSchema = new Schema({
   surname: { type: String, required: true },
   celPhone: { type: Number, required: true },
   email: { type: String, required: true },
-
   password: { type: String, required: true },
-
-  image: String,
+  imageCapa: String,
   imagePerfil: String,
   skills: String,
   address: String,
