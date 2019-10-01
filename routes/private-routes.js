@@ -36,7 +36,6 @@ router.post('/post', uploadCloud.single('imageUrl'), async (req, res) => {
 
 router.get('/update-perfil-candidate', async (req, res) => {
   // eslint-disable-next-line no-underscore-dangle
-  const updatePerfil = await Candidate.findById(req.session.currentUser._id);
   res.render('perfilCandidateComplete', { updatePerfil });
 });
 
