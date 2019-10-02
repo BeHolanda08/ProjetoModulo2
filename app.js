@@ -50,7 +50,7 @@ app.use(cookieParser());
 
 app.use(session({
   secret: 'auth-secret',
-  cookie: { maxAge: 50000 },
+  cookie: { maxAge: 600000 },
   store: new MongoStore({
     mongooseConnection: mongoose.connection,
     ttl: 24 * 60 * 60,
@@ -67,7 +67,7 @@ app.use((req, res, next) => {
   if (req.session.currentUser) {
     next();
   } else {
-      res.redirect('/');
+    res.redirect('/');
   }
 });
 

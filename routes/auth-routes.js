@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
   const candidate = await Candidate.findOne({ email });
   const company = await Company.findOne({ email });
 
-  if (candidate) {
+  if (candidate) {                    
     if (bcrypt.compareSync(password, candidate.password)) {
       req.session.currentUser = candidate;
       res.redirect('home');
@@ -48,16 +48,20 @@ router.get('/signUpCandidate', (req, res) => {
 // eslint-disable-next-line consistent-return
 router.post('/signUpCandidate', async (req, res) => {
   const {
-    name, email, password, surname, celPhone,
+    name, email, password, password2, surname, celPhone,
   } = req.body;
 
   // validação de candidate
   if (!name || !email || !password || !surname || !celPhone) {
-    return res.send('signupCandidate', { errorMessage: 'Por favor, preencha todos os campos obrigatórios!' });
+    return res.render('signUpCandidate', { errorMessage: 'Por favor, preencha todos os campos obrigatórios!' });
   }
 
-  if (await Candidate.findOne({ email })) {
-    return res.send({ errorMessage: 'Usuário já cadastrado!' });
+  if (password !== password2) {
+    return res.render('signUpCandidate', { errorMessage: 'Senha não confere!' });
+  }
+
+  if (Candidate.findOne({ email })) {
+    return res.render('signUpCandidate', { errorMessage: 'Usuário já cadastrado!' });
   }
 
   try {
@@ -80,12 +84,16 @@ router.get('/signUpCompany', (req, res) => {
 // eslint-disable-next-line consistent-return
 router.post('/signUpCompany', async (req, res) => {
   const {
-    name, phone, email, password,
+    name, phone, email, password, password2,
   } = req.body;
 
   // validação de company
   if (!name || !phone || !email || !password) {
-    res.send('signUpCompany', { errorMessage: 'Por favor, preencha todos os campos Obrigatórios!' });
+    return res.send('signUpCompany', { errorMessage: 'Por favor, preencha todos os campos Obrigatórios!' });
+  }
+
+  if (password !== password2) {
+    return res.render('signUpCompany', { errorMessage: 'Senha não confere!' });
   }
 
   if (await Company.findOne({ email })) {
@@ -109,7 +117,13 @@ router.get('/forgotPassword', (req, res) => {
   res.render('forgotPassword');
 });
 
-router.post('/forgotPassword', (req, res) => res.render('forgotPassword', { error: 'Please fill all required fields!' }));
+// eslint-disable-next-line consistent-return
+router.post('/forgotPassword', (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    return res.render('forgotPassword');
+  }
+});
 
 router.get('/passwordSubmission', (req, res) => {
   res.render('passwordSubmission');
