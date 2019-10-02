@@ -17,7 +17,11 @@ const app = express();
 const url = process.env.DB_HOST;
 const options = {
   // eslint-disable-next-line max-len
-  reconnectTries: Number.MAX_VALUE, reconnectInterval: 500, poolSize: 5, useNewUrlParser: true, useUnifiedTopology: true,
+  reconnectTries: Number.MAX_VALUE,
+  reconnectInterval: 500,
+  poolSize: 5,
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 };
 
 // Mongoose
@@ -25,7 +29,7 @@ const options = {
 mongoose.connect(url, options);
 mongoose.set('useCreatIndex', true);
 
-mongoose.connection.on('error', (err) => {
+mongoose.connection.on('error', err => {
   console.log(`Erro na conexão com o banco de Dados: ${err}`);
 });
 
@@ -47,18 +51,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-
-app.use(session({
-  secret: 'auth-secret',
-  cookie: { maxAge: 600000 },
-  store: new MongoStore({
-    mongooseConnection: mongoose.connection,
-    ttl: 24 * 60 * 60,
-  }),
-  proxy: true,
-  resave: true,
-  saveUninitialized: true,
-}));
+app.use(
+  session({
+    secret: 'auth-secret',
+    cookie: { maxAge: 600000 },
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection,
+      ttl: 24 * 60 * 60
+    }),
+    proxy: true,
+    resave: true,
+    saveUninitialized: true
+  })
+);
 
 app.use('/', authRouter);
 
@@ -73,7 +78,7 @@ app.use((req, res, next) => {
 
 app.use('/', privateRoutes);
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log('Express rodando');
 });
 
