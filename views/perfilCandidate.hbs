@@ -7,6 +7,7 @@
 
     <ul>
       <li>{{ perfil.name }}</li>
+      <li>{{ perfil.surname }}</li>
       <li>{{ perfil.city }}</li>
       <li>{{ perfil.state }}</li>
       <li>{{ perfil.description }}</li>
@@ -17,6 +18,19 @@
       <li>{{ perfil.link4 }}</li>
     </ul>
   </form>
+
+  <h3>Post</h3>
+  {{#each myPosts}}
+  <div class="post-container">
+
+    <img src="{{ image }}" width="200" height="100">
+    <p>{{ message }}</p>
+    <p></p>
+    <a href="/delete-post/{{_id}}">Deletar</a>
+  </div>
+  {{/each}}
+
   <a href="/update-perfil-candidate/{{perfil._id}}">Editar perfil</a>
   <a href="/home">Home</a>
+
 </div>

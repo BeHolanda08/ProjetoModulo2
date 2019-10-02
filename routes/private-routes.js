@@ -14,11 +14,18 @@ router.get(
   '/perfil-candidate',
   uploadCloud.single('imageUrl'),
   async (req, res) => {
-    // eslint-disable-next-line no-underscore-dangle
     const perfil = await Candidate.findById(req.session.currentUser._id);
-    res.render('perfilCandidate', { perfil });
+    const myPosts = await Post.find({ authorId: req.session.currentUser._id });
+    res.render('perfilCandidate', { perfil, myPosts });
   }
 );
+
+router.get('/delete-post/:deleteId', async (req, res) => {
+  await Post.findByIdAndDelete(req.params.deleteId);
+  const perfil = await Candidate.findById(req.session.currentUser._id);
+  const myPosts = await Post.find({ authorId: req.session.currentUser._id });
+  res.render('perfilCandidate', { perfil, myPosts });
+});
 
 router.post('/post', uploadCloud.single('imageUrl'), async (req, res) => {
   const image = req.file.url;
@@ -30,7 +37,6 @@ router.post('/post', uploadCloud.single('imageUrl'), async (req, res) => {
     return;
   }
 
-  // eslint-disable-next-line no-underscore-dangle
   const authorId = req.session.currentUser._id;
   const newPost = new Post({ image, message, authorId });
 
@@ -40,15 +46,13 @@ router.post('/post', uploadCloud.single('imageUrl'), async (req, res) => {
 });
 
 router.get('/update-perfil-candidate/:editId', async (req, res) => {
-  // eslint-disable-next-line no-underscore-dangle
-
   const updatePerfil = await Candidate.findById(req.params.editId);
   return res.render('perfilCandidateComplete', updatePerfil);
 });
 
 router.post('/update-perfil-candidate', async (req, res) => {
   try {
-    await Candidate.findByIdAndUpdate(req.body._id, req.body);
+    await Candidate.findByIdAndUpdate(req.session.currentUser._id, req.body);
     return res.redirect('/perfil-candidate');
   } catch (err) {
     return res.render('error', {
