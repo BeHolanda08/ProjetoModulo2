@@ -10,15 +10,11 @@ router.get('/home', async (req, res) => {
   res.render('home', { allPosts });
 });
 
-router.get(
-  '/perfil-candidate',
-  uploadCloud.single('imageUrl'),
-  async (req, res) => {
-    const perfil = await Candidate.findById(req.session.currentUser._id);
-    const myPosts = await Post.find({ authorId: req.session.currentUser._id });
-    res.render('perfilCandidate', { perfil, myPosts });
-  }
-);
+router.get('/perfil-candidate', async (req, res) => {
+  const perfil = await Candidate.findById(req.session.currentUser._id);
+  const myPosts = await Post.find({ authorId: req.session.currentUser._id });
+  res.render('perfilCandidate', { perfil, myPosts });
+});
 
 router.get('/delete-post/:deleteId', async (req, res) => {
   await Post.findByIdAndDelete(req.params.deleteId);
@@ -50,15 +46,54 @@ router.get('/update-perfil-candidate/:editId', async (req, res) => {
   return res.render('perfilCandidateComplete', updatePerfil);
 });
 
-router.post('/update-perfil-candidate', async (req, res) => {
-  try {
-    await Candidate.findByIdAndUpdate(req.session.currentUser._id, req.body);
-    return res.redirect('/perfil-candidate');
-  } catch (err) {
-    return res.render('error', {
-      errorMessage: `Erro ao editar Candidato: ${err}`
-    });
+router.post(
+  '/update-perfil-candidate',
+  uploadCloud.array('images', 2),
+  async (req, res) => {
+    const images = req.files;
+    const imagePerfil = images[0].url;
+    const imageCapa = images[1].url;
+    const {
+      name,
+      surname,
+      skills,
+      address,
+      number,
+      complement,
+      city,
+      state,
+      zipCode,
+      link1,
+      link2,
+      link3,
+      link4
+    } = req.body;
+    try {
+      await Candidate.findByIdAndUpdate(req.session.currentUser._id, {
+        name,
+        surname,
+        skills,
+        address,
+        number,
+        complement,
+        city,
+        state,
+        zipCode,
+        link1,
+        link2,
+        link3,
+        link4,
+        imagePerfil,
+        imageCapa
+      });
+
+      return res.redirect('/perfil-candidate');
+    } catch (err) {
+      return res.render('error', {
+        errorMessage: `Erro ao editar Candidato: ${err}`
+      });
+    }
   }
-});
+);
 
 module.exports = router;

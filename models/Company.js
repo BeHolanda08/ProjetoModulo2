@@ -7,8 +7,8 @@ const companySchema = new Schema({
   phone: { type: Number, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  image: String,
   imagePerfil: String,
+  imageCapa: String,
   skills: String,
   address: String,
   number: Number,
@@ -16,6 +16,7 @@ const companySchema = new Schema({
   city: String,
   state: String,
   zipCode: Number,
+  site: String
 });
 
 const Company = mongoose.model('Company', companySchema);
