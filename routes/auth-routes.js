@@ -13,14 +13,16 @@ router.get('/', (req, res) => {
 router.post('/', async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    res.render('index', { errorMessage: 'Por favor, preencha todos os campos obrigatórios!' });
+    res.render('index', {
+      errorMessage: 'Por favor, preencha todos os campos obrigatórios!'
+    });
     return;
   }
 
   const candidate = await Candidate.findOne({ email });
   const company = await Company.findOne({ email });
 
-  if (candidate) {                    
+  if (candidate) {
     if (bcrypt.compareSync(password, candidate.password)) {
       req.session.currentUser = candidate;
       res.redirect('home');
@@ -47,28 +49,36 @@ router.get('/signUpCandidate', (req, res) => {
 
 // eslint-disable-next-line consistent-return
 router.post('/signUpCandidate', async (req, res) => {
-  const {
-    name, email, password, password2, surname, celPhone,
-  } = req.body;
+  const { name, email, password, password2, surname, celPhone } = req.body;
 
   // validação de candidate
   if (!name || !email || !password || !surname || !celPhone) {
-    return res.render('signUpCandidate', { errorMessage: 'Por favor, preencha todos os campos obrigatórios!' });
+    return res.render('signUpCandidate', {
+      errorMessage: 'Por favor, preencha todos os campos obrigatórios!'
+    });
   }
 
   if (password !== password2) {
-    return res.render('signUpCandidate', { errorMessage: 'Senha não confere!' });
+    return res.render('signUpCandidate', {
+      errorMessage: 'Senha não confere!'
+    });
   }
 
   if (Candidate.findOne({ email })) {
-    return res.render('signUpCandidate', { errorMessage: 'Usuário já cadastrado!' });
+    return res.render('signUpCandidate', {
+      errorMessage: 'Usuário já cadastrado!'
+    });
   }
 
   try {
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
     const newCandidate = new Candidate({
-      name, email, password: hash, surname, celPhone,
+      name,
+      email,
+      password: hash,
+      surname,
+      celPhone
     });
     await newCandidate.save();
     res.redirect('/');
@@ -83,13 +93,13 @@ router.get('/signUpCompany', (req, res) => {
 
 // eslint-disable-next-line consistent-return
 router.post('/signUpCompany', async (req, res) => {
-  const {
-    name, phone, email, password, password2,
-  } = req.body;
+  const { name, phone, email, password, password2 } = req.body;
 
   // validação de company
   if (!name || !phone || !email || !password) {
-    return res.send('signUpCompany', { errorMessage: 'Por favor, preencha todos os campos Obrigatórios!' });
+    return res.send('signUpCompany', {
+      errorMessage: 'Por favor, preencha todos os campos Obrigatórios!'
+    });
   }
 
   if (password !== password2) {
@@ -104,7 +114,10 @@ router.post('/signUpCompany', async (req, res) => {
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
     const newCompany = new Company({
-      name, phone, email, password: hash,
+      name,
+      phone,
+      email,
+      password: hash
     });
     await newCompany.save();
     res.redirect('/');
@@ -129,9 +142,8 @@ router.get('/passwordSubmission', (req, res) => {
   res.render('passwordSubmission');
 });
 
-
 router.get('/logout', (req, res) => {
-  req.session.destroy((error) => {
+  req.session.destroy(error => {
     if (error) {
       console.log(error);
     } else {

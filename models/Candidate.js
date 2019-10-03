@@ -8,19 +8,19 @@ const candidateSchema = new Schema({
   celPhone: { type: Number, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  imageCapa: String,
   imagePerfil: String,
+  imageCapa: String,
   skills: String,
   address: String,
   number: Number,
   complement: String,
   city: String,
   state: String,
-  zipCode: Number,
+  zipCode: String,
   link1: String,
   link2: String,
   link3: String,
-  link4: String,
+  link4: String
 });
 
 const Candidate = mongoose.model('Candidate', candidateSchema);
