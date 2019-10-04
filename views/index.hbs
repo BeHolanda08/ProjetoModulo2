@@ -1,17 +1,19 @@
+<div class="wrap-centralized">
+  <div class="container-logo">
+    <img src="" alt="MobJobs">
+    <h1>MobJobs</h1>
+  </div>
+  <form action="/" method="POST" class="container-login" >
+    <input type="text" name="email" placeholder="Por favor insira seu email" class="txtBox txtEmail">
+    <input type="password" name="password" placeholder="Por favor insira sua Senha" class="txtBox txtPass">
+    <a href="/forgotPassword" class="lnk lnkForgot">Esqueci Minha Senha</a>
+    <br>
 
-    <div>
-        <h1>MobJobs</h1>
-        <form action="/" method="POST">
-        <input type="text" name="email" placeholder="email">
-        <input type="password" name="password" placeholder="Senha">
-        <a href="/forgotPassword">Esqueci Minha Senha</a>
-        <br>
-
-  {{#if errorMessage}}
+    {{#if errorMessage}}
     <p>{{errorMessage}}</p>
-  {{/if}}
-  
-  <button class="button" type="submit">Entrar</button>
-        <a href="/signUp">Cadastrar</a>
-        </form>
-    </div>
+    {{/if}}
+
+    <button class="btn btnSignIn" type="submit">Entrar</button>
+    <a href="/signUp" class="lnk lnkSignUp">Cadastrar</a>
+  </form>
+</div>

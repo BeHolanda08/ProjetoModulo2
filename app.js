@@ -43,6 +43,7 @@ mongoose.connection.on('connected', () => {
 });
 
 app.set('views', `${__dirname}/views`);
+app.use(express.static('public'));
 app.set('view engine', 'hbs');
 
 // Body-Parser

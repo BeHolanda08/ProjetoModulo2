@@ -1,0 +1,87 @@
+/* LIBRARY 
+Main color: #5b8fdd
+Seccundary color: #3b5c8d
+*/
+
+
+/* CSS RESET */
+*{ margin: 0; padding: 0; font-size: 16px; color: #666; outline: initial;  font-family: 'PT Sans', sans-serif, helvetica; }
+html, body{ height: 100%; }
+
+/* STRUCTURE */
+/* login */
+.wrap-centralized{ background: #f0f0f0; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center }
+.container-logo{display: flex;flex-direction: row;width: 430px;justify-content: center;margin-bottom: 30px;}
+.container-login{background: #fff;height: 300px;display: flex;flex-direction: column;width: 430px;padding: 50px;}
+.txtBox{border-width: 0 0 1px 0;border-color: #ccc;margin: 0 0 20px 0;height: 33px;padding: 7px 15px;}
+  .txtBox::placeholder{ color: #aaa }
+.lnk{ color: #5b8fdd; text-decoration: none}
+  .lnk:hover{ color: #4e7abb }
+.lnkForgot{ text-align: right }
+.btn{height: 48px;border: none;border-radius: 5px;cursor: pointer}
+  .btn:hover{background: #507ec4;}
+  .btn:active{box-shadow: inset 2px 2px 5px #3b5c8d;}
+
+  /* customizacoes */
+  .btnSignIn{background: #5b8fdd;color: #fff;}
+  .lnkSignUp{ border: 1px solid #5b8fdd; color: #5b8fdd; height: 48px; display: flex; justify-content: center; align-items: center; border-radius: 5px; margin-top: 20px}
+    .lnkSignUp:hover{background: #507ec4; color: #fff}
+    .lnkSignUp:active{box-shadow: inset 2px 2px 5px #3b5c8d;}
+
+/* Perfil Choice */
+.subtitle{font-size: 21px;color: #999;text-align: center;}
+.container-options{display: flex;flex-direction: row;width: 600px;max-width: 100%;justify-content: space-around;margin-top: 50px;margin-bottom: 200px;}
+.container-perfilChoice{background: #fff;border-radius: 10px;align-self: center;width: 200px;height: 200px;display: flex;flex-direction: column;justify-content: center;align-items: center;text-decoration: none;}
+  .container-perfilChoice:active{ box-shadow: inset 2px 2px 5px #3b5c8d;}
+
+.container-perfilChoice img{ width: 90px }
+.container-perfilChoice p{ margin-top: 15px; font-weight: bold; color: #5b8fdd }
+
+/* form signIn/signUp */
+.wrap-form{display: flex;flex-direction: column;align-items: center;background: #f0f0f0;max-height: 100%;height: 100%;justify-content: center;}
+.form-container{background: #fff;width: 80%;padding: 50px;border-radius: 10px;margin: 30px 0 250px 0;display: flex;flex-wrap: wrap;justify-content: center;position: relative;}
+.input-container{display: flex;flex-direction: column;margin: 15px;min-width: 30%;}
+.input-container__email {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+    .input-container__email .input-container {
+      width: 62%;
+  }
+.btnSubmit { display: block; width: 60%; margin: auto;}
+.container-voltar{border: 0px solid #000;position: absolute;top: 20px;left: 5%;display: flex;}
+  .alnk{ display: flex; justify-content: center; align-items: center; text-decoration: none; cursor: pointer }
+    .ico-back{ width: 20px; margin-right: 5px; }
+    .alnk span{ font-size: 18px; color: #999}
+/* RESPONSIVITY */
+@media(max-width: 1200px){
+  .input-container__email .input-container{ width: 63%; }
+}
+@media(max-width: 768px){
+  /* login */
+  .container-login{max-width: 70%; height: 300px }
+  .container-logo{max-width: 70%; margin-top: 20px; }
+  .input-container { display: flex; flex-direction: column; margin: 15px; min-width: 95%; }
+  .form-container{ margin: 20px 0 0 0; width: 90%; padding: 20px 0}
+}
+@media(max-height: 480px){
+  .wrap-centralized,.wrap-form{max-height: initial;height: initial;padding-bottom: 20px;}
+}
+@media(max-width: 736px){
+  .input-container__email .input-container{ width: 64%; }
+  .container-options{margin-bottom: 0px;}
+}
+
+@media(max-width: 425px){
+  /* login */
+  .container-login{max-width: 95%;height: 360px;padding: 35px 20px;box-sizing: border-box;}
+  .container-logo{max-width: 70%;margin-top: 20px;}
+  /* Perfil Choice */
+  .container-options{display: flex;flex-direction: column;width: 90%;margin-top: 140px;margin-bottom: 400px;}
+  .container-perfilChoice{width: 100%;display: flex;flex-direction: row;margin-bottom: 30px;max-height: 80px;padding: 15px 0;justify-content: space-around;}
+  .container-perfilChoice p{ margin-top: 0 }
+  .form-container{ padding: 0; margin: 20px 0 0 0; width: 100%; border-radius: 0; padding: 20px 0}
+  .alnk span{ display: none }
+  .wrap-form{max-height: initial;height: initial;padding-bottom: 20px;}
+}
