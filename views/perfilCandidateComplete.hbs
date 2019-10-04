@@ -10,14 +10,18 @@
         <label for="text">Sobrenome</label>
         <input type="text" name="surname" placeholder="Sobrenome" value="{{surname}}">
 
-        <label for="text">Imagem Perfil</label>
-        <input type="file" name="images" placeholder="Imagem Capa" value="{{imagePerfil}}">
+        <label for="text">Celular</label>
+        <input type="text" name="celPhone" placeholder="Ex.: (00) 00000-0000" maxlength="11" autocomplete="off"
+            value="{{ celPhone }}">
 
-        <label for="text">Imagem Capa</label>
-        <input type="file" name="images" placeholder="Imagem Perfil" value="{{imageCapa}}">
+        <label for="text">Imagem Perfil</label>
+        <input type="file" name="imagePerfil" placeholder="Imagem Perfil" value="{{ imagePerfil }}">
+
+        {{!-- <label for="text">Imagem Capa</label>
+        <input type="file" name="images" placeholder="Imagem Capa" value="{{ imageCapa }}"> --}}
 
         <label for="text">Habilidades</label>
-        <input type="text" name="skills" placeholder="Habilidades" valeu="{{ skills }}">
+        <input type="text" name="skill" placeholder="Habilidades" value="{{ skill }}">
 
         <label for="text">Endereço</label>
         <input type="text" name="address" placeholder="Endereço" value="{{ address }}">
@@ -51,4 +55,5 @@
 
         <button type="submit">Confirmar</button>
     </form>
+    {{imagePerfil}}
 </div>

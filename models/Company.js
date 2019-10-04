@@ -15,7 +15,7 @@ const companySchema = new Schema({
   complement: String,
   city: String,
   state: String,
-  zipCode: Number,
+  zipCode: String,
   site: String
 });
 

@@ -2,19 +2,28 @@
   <h1>MobJobs</h1>
   <p>Precisamos de alguns dados básicos</p>
   <form action="/signUpCompany" method="POST">
+
     <label for="name">Empresa</label>
     <input type="text" name="name" placeholder="Empresa">
+
     <label for="phone">Telefone</label>
     <input type="text" name="phone" placeholder="(00) 00000-0000">
+
     <label for="email">Email</label>
     <input type="email" name="email" placeholder="Esse será seu login">
+
     <label for="password">Senha</label>
     <input type="password" name="password" placeholder="Coloque sua Senha">
+
     <label for="password">Senha</label>
     <input type="password" name="password2" placeholder="Confirmar Senha">
+
     <button type="submit">Confirmar</button>
+
   </form>
+
   {{#if errorMessage}}
   <p>{{errorMessage}}</p>
   {{/if}}
+
 </div>

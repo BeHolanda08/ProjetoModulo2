@@ -8,8 +8,7 @@ const MongoStore = require('connect-mongo')(session);
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const authRouter = require('./routes/auth-routes');
-const privateRoutesCandidate = require('./routes/private-routes-candidate');
-const privateRoutesCompany = require('./routes/private-routes-company');
+const privateRoutes = require('./routes/private-routes');
 
 const app = express();
 
@@ -17,7 +16,6 @@ const app = express();
 
 const url = process.env.DB_HOST;
 const options = {
-  // eslint-disable-next-line max-len
   reconnectTries: Number.MAX_VALUE,
   reconnectInterval: 500,
   poolSize: 5,
@@ -77,8 +75,7 @@ app.use((req, res, next) => {
   }
 });
 
-app.use('/', privateRoutesCandidate);
-app.use('/', privateRoutesCompany);
+app.use('/', privateRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log('Express rodando');
