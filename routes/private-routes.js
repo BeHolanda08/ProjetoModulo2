@@ -48,44 +48,14 @@ router.get('/update-perfil-candidate/:editId', async (req, res) => {
 
 router.post(
   '/update-perfil-candidate',
-  uploadCloud.array('images', 2),
+  uploadCloud.single('imagePerfil'),
   async (req, res) => {
-    const images = req.files;
-    const imagePerfil = images[0].url;
-    const imageCapa = images[1].url;
-    const {
-      name,
-      surname,
-      skills,
-      address,
-      number,
-      complement,
-      city,
-      state,
-      zipCode,
-      link1,
-      link2,
-      link3,
-      link4
-    } = req.body;
+    if (req.file) {
+      req.body.imagePerfil = req.file.url;
+    }
     try {
-      await Candidate.findByIdAndUpdate(req.session.currentUser._id, {
-        name,
-        surname,
-        skills,
-        address,
-        number,
-        complement,
-        city,
-        state,
-        zipCode,
-        link1,
-        link2,
-        link3,
-        link4,
-        imagePerfil,
-        imageCapa
-      });
+      await Candidate.findByIdAndUpdate(req.session.currentUser._id, req.body);
+      console.log(req.body);
 
       return res.redirect('/perfil-candidate');
     } catch (err) {
