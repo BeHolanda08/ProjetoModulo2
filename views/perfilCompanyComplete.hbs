@@ -1,18 +1,16 @@
 <div>
     <h1>MobJobs</h1>
     <p>Cadastro Completo</p>
+    <h1>Company</h1>
 
-    <form action="/update-perfil-candidate" method="POST" enctype="multipart/form-data">
+    <form action="/update-perfil-company" method="POST" enctype="multipart/form-data">
 
         <label for="text">Nome</label>
         <input type="text" name="name" placeholder="Nome" value="{{ name }}">
 
-        <label for="text">Sobrenome</label>
-        <input type="text" name="surname" placeholder="Sobrenome" value="{{surname}}">
-
-        <label for="text">Celular</label>
-        <input type="text" name="celPhone" placeholder="Ex.: (00) 00000-0000" maxlength="11" autocomplete="off"
-            value="{{ celPhone }}">
+        <label for="text">Telefone</label>
+        <input type="text" name="phone" placeholder="Ex.: (00) 0000-0000" maxlength="10" autocomplete="off"
+            value="{{ phone }}">
 
         <label for="text">Imagem Perfil</label>
         <input type="file" name="imagePerfil" placeholder="Imagem Perfil" value="{{ imagePerfil }}">
@@ -41,17 +39,9 @@
         <label for="text">Cep</label>
         <input type="text" name="zipCode" placeholder="Cep" value="{{ zipCode }}">
 
-        <label for="text">Link</label>
-        <input type="text" name="link1" placeholder="Linkedin" value="{{ link1 }}">
+        <label for="text">Site</label>
+        <input type="text" name="site" placeholder="Site" value="{{ site }}">
 
-        <label for="text">Link</label>
-        <input type="text" name="link2" placeholder="Link Intagram" value="{{ link2 }}">
-
-        <label for="text">Link</label>
-        <input type="text" name="link3" placeholder="Link Facebook" value="{{ link3 }}">
-
-        <label for="text">Link</label>
-        <input type="text" name="link4" placeholder="GitHub" value="{{ link4 }}">
 
         <button type="submit">Confirmar</button>
     </form>

@@ -8,7 +8,8 @@ const MongoStore = require('connect-mongo')(session);
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const authRouter = require('./routes/auth-routes');
-const privateRoutes = require('./routes/private-routes');
+const privateRoutesCandidate = require('./routes/private-routes-candidate');
+const privateRoutesCompany = require('./routes/private-routes-company');
 
 const app = express();
 
@@ -75,7 +76,8 @@ app.use((req, res, next) => {
   }
 });
 
-app.use('/', privateRoutes);
+app.use('/', privateRoutesCandidate);
+app.use('/', privateRoutesCompany);
 
 app.listen(process.env.PORT, () => {
   console.log('Express rodando');
