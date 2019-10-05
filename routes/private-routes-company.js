@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const express = require('express');
 const Company = require('../models/Company');
 const Post = require('../models/Post');
@@ -11,7 +12,9 @@ router.get('/home', async (req, res) => {
 });
 
 router.get('/perfil-company', async (req, res) => {
+  // eslint-disable-next-line no-underscore-dangle
   const perfil = await Company.findById(req.session.currentUser._id);
+  // eslint-disable-next-line no-underscore-dangle
   const myPosts = await Post.find({ authorId: req.session.currentUser._id });
   res.render('perfilCompany', { perfil, myPosts });
 });
@@ -28,7 +31,7 @@ router.post('/post', uploadCloud.single('imageUrl'), async (req, res) => {
   const { message } = req.body;
   if (!image || !message) {
     res.render('home', {
-      errorMessage: 'Por favor, preencha todos os campos obrigatórios!'
+      errorMessage: 'Por favor, preencha todos os campos obrigatórios!',
     });
     return;
   }
@@ -66,7 +69,7 @@ router.post(
       link1,
       link2,
       link3,
-      link4
+      link4,
     } = req.body;
     try {
       await Company.findByIdAndUpdate(req.session.currentUser._id, {
@@ -84,16 +87,16 @@ router.post(
         link3,
         link4,
         imagePerfil,
-        imageCapa
+        imageCapa,
       });
 
       return res.redirect('/perfil-company');
     } catch (err) {
       return res.render('error', {
-        errorMessage: `Erro ao editar Candidato: ${err}`
+        errorMessage: `Erro ao editar Candidato: ${err}`,
       });
     }
-  }
+  },
 );
 
 module.exports = router;

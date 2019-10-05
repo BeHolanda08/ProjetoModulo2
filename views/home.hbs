@@ -1,25 +1,52 @@
-<h1>Pagina principal aqui</h1>
-<form action="/post" class="container-addPost" method="POST" enctype="multipart/form-data">
-  <input type="file" name="imageUrl" placeholder="Insira imagem">
-  <textarea name="message" placeholder="Entre com a mensagem"></textarea>
-  <button type="submit">Enviar</button>
-</form>
-{{#if errorMessage}}
-<p>{{errorMessage}}</p>
-{{/if}}
 
-<a href="/perfil-candidate">Perfil</a>
+<div class="wrap-main">
+  <div class="nav-bar">
+    <img src="" alt="" class="logo">
+    <div class="search-container">
+      <input type="text" placeholder="Filtre aqui pessoas ou páginas"><a href="">Pesquisar</a>
+    </div>
+    <div class="icons-container">
+      <ul>
+        <li><a href="" class="icon"></a></li>
+        <li><a href="" class="icon"></a></li>
+        <li><a href="" class="icon"></a></li>
+        <li><a href="/perfil-candidate">Perfil</a></li>
+        <li><a href="/">Logout</a></li>
+      </ul>
+    </div>
+    <div class="profile-container">
 
-<hr>
-<h3>Todos os Posts</h3>
-{{#each allPosts}}
-<div class="post-container">
+    </div>
+  </div>
+  <div class="content">
+    <div class="left-column"></div>
+    <div class="middle-column">
+      <div class="container__create-container">
+        <form action="/post" class="container-addPost" method="POST" enctype="multipart/form-data">
+          <input type="file" name="imageUrl" placeholder="Insira imagem">
+          <textarea name="message" placeholder="Entre com a mensagem"></textarea>
+          <button type="submit">Enviar</button>
+        </form>
+        {{#if errorMessage}}
+        <p>{{errorMessage}}</p>
+        {{/if}}
+      </div>
+      <div class="container-post">
+        {{#each allPosts}}
+        <div class="post-container">
 
-  <img src="{{ image }}" width="200" height="100">
-  <p>{{ message }}</p>
+          <img src="{{ image }}" width="200" height="100">
+          <p>{{ message }}</p>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    <div class="right-column"></div>
+  </div>
 </div>
-{{/each}}
 
-<a href="/">Logout</a>
 
-<a href="/perfil-candidate">Perfil</a>
+
+
+
+

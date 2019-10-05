@@ -39,9 +39,9 @@
     </div>
     <button type="submit" class="btn btnSubmit">Confirmar</button>
 
+    {{#if errorMessage}}
+    <p class="error-message">{{errorMessage}}</p>
+    {{/if}}
   </form>
 
-  {{#if errorMessage}}
-  <p>{{errorMessage}}</p>
-  {{/if}}
 </div>
