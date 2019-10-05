@@ -7,41 +7,53 @@
 
         <label for="text">Nome</label>
         <input type="text" name="name" placeholder="Nome" value="{{ name }}">
-
+        <br>
         <label for="text">Telefone</label>
         <input type="text" name="phone" placeholder="Ex.: (00) 0000-0000" maxlength="10" autocomplete="off"
             value="{{ phone }}">
+        <br>
 
         <label for="text">Imagem Perfil</label>
         <input type="file" name="imagePerfil" placeholder="Imagem Perfil" value="{{ imagePerfil }}">
+        {{!-- <img src="{{ imagePerfil }}" width="120px" /> --}}
+        <br>
 
-        {{!-- <label for="text">Imagem Capa</label>
-        <input type="file" name="images" placeholder="Imagem Capa" value="{{ imageCapa }}"> --}}
+        <label for="text">Imagem Capa</label>
+        <input type="file" name="imageCapa" placeholder="Imagem Capa" value="{{ imageCapa }}">
+        {{!-- <img src="{{ imageCapa }}" width="120px" /> --}}
+        <br>
 
         <label for="text">Habilidades</label>
         <input type="text" name="skill" placeholder="Habilidades" value="{{ skill }}">
+        <br>
 
         <label for="text">Endereço</label>
         <input type="text" name="address" placeholder="Endereço" value="{{ address }}">
+        <br>
 
         <label for="text">Número</label>
         <input type="number" name="number" placeholder="Número" value="{{ number }}">
+        <br>
 
         <label for="text">Complemento</label>
         <input type="text" name="complement" placeholder="Complemento" value="{{ complement }}">
+        <br>
 
         <label for="text">Cidade</label>
         <input type="text" name="city" placeholder="Cidade" value="{{ city }}">
+        <br>
 
         <label for="text">Estado</label>
         <input type="text" name="state" placeholder="Estado" value="{{ state }}">
+        <br>
 
         <label for="text">Cep</label>
         <input type="text" name="zipCode" placeholder="Cep" value="{{ zipCode }}">
+        <br>
 
         <label for="text">Site</label>
         <input type="text" name="site" placeholder="Site" value="{{ site }}">
-
+        <br>
 
         <button type="submit">Confirmar</button>
     </form>

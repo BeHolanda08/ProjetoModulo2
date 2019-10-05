@@ -3,11 +3,14 @@
   <br>
   <form action="/post" class="container-addPost" method="POST" enctype="multipart/form-data">
     <img src="{{ perfil.imagePerfil }}" name="imagePerfil" width="200" height="100" alt="{{ perfil.name }}">
-    {{!-- <img src="{{ perfil.imageCapa }}" name="imageCapa" width="500" height="100" alt="Foto de capa"> --}}
+    <img src="{{ perfil.imageCapa }}" name="imageCapa" width="500" height="100" alt="Foto de capa">
     <br>
     <input type="file" name="imageUrl" placeholder="Insira imagem">
+    <br>
     <textarea name="message" placeholder="Entre com a mensagem"></textarea>
+    <br>
     <button type="submit">Enviar</button>
+    <br>
 
     {{#if errorMessage}}
     <p>{{errorMessage}}</p>
