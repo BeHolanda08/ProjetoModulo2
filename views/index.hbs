@@ -1,17 +1,23 @@
+<div>
+  <h1>MobJobs</h1>
+  <form action="/" method="POST">
+    <label for="text">Email</label>
+    <input type="text" name="email" placeholder="Email">
+    <br>
+    <label for="text">Senha</label>
+    <input type="password" name="password" placeholder="Senha">
+    <br>
 
-    <div>
-        <h1>MobJobs</h1>
-        <form action="/" method="POST">
-        <input type="text" name="email" placeholder="email">
-        <input type="password" name="password" placeholder="Senha">
-        <a href="/forgotPassword">Esqueci Minha Senha</a>
-        <br>
 
-  {{#if errorMessage}}
+    {{#if errorMessage}}
     <p>{{errorMessage}}</p>
-  {{/if}}
-  
-  <button class="button" type="submit">Entrar</button>
-        <a href="/signUp">Cadastrar</a>
-        </form>
-    </div>
+    {{/if}}
+
+    <button class="button" type="submit">Entrar</button>
+    <a href="/signUp">Cadastrar</a>
+  </form>
+  <br>
+  <footer>
+    <a href="/forgotPassword">Esqueci minha senha</a>
+  </footer>
+</div>

@@ -48,10 +48,25 @@ router.get('/update-perfil-company/:editId', async (req, res) => {
 
 router.post(
   '/update-perfil-company',
-  uploadCloud.single('imagePerfil'),
+  uploadCloud.fields([
+    {
+      name: 'imagePerfil',
+      maxCount: 1
+    },
+    {
+      name: 'imageCapa',
+      maxCount: 1
+    }
+  ]),
   async (req, res) => {
-    if (req.file) {
-      req.body.imagePerfil = req.file.url;
+    console.log(req.body);
+    if (req.files) {
+      if (req.files.imagePerfil && req.files.imagePerfil.length > 0) {
+        req.body.imagePerfil = req.files.imagePerfil[0].url;
+      }
+      if (req.files.imageCapa && req.files.imageCapa.length > 0) {
+        req.body.imageCapa = req.files.imageCapa[0].url;
+      }
     }
     try {
       await Company.findByIdAndUpdate(req.session.currentUser._id, req.body);

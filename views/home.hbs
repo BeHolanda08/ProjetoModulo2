@@ -2,17 +2,16 @@
 
 <form action="/post" class="container-addPost" method="POST" enctype="multipart/form-data">
   <input type="file" name="imageUrl" placeholder="Insira imagem">
+  <br>
   <textarea name="message" placeholder="Entre com a mensagem"></textarea>
+  <br>
   <button type="submit">Enviar</button>
+  <br>
 </form>
 
-{{#if errorMessage}}
-<p>{{errorMessage}}</p>
-{{/if}}
-
-
-<a href="/perfil-candidate">Perfil Candidate</a>
-<a href="/perfil-company">Perfil Company</a>
+<a href="/perfil-candidate">Perfil Candidato </a>
+<br>
+<a href="/perfil-company">Perfil Empresa</a>
 
 <hr>
 <h3>Todos os Posts</h3>
@@ -24,5 +23,12 @@
 </div>
 {{/each}}
 
-<a href="/perfil-candidate">Perfil</a>
-<a href="/">Logout</a>
+
+<a href="/perfil-candidate">Perfil Candidato </a>
+<br>
+<a href="/perfil-company">Perfil Empresa</a>
+<br>
+<br>
+<footer>
+  <a href="/">Logout</a>
+</footer>
