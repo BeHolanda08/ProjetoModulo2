@@ -2,9 +2,10 @@
   "name": "projetomod2",
   "version": "1.0.0",
   "description": "ProjetoModulo2",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "node ./app",
+    "debug": "nodemon --inspect ./app",
     "dev": "nodemon ./app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

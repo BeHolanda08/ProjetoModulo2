@@ -1,35 +1,43 @@
-<div>
-  <h1>MobJobs</h1>
-  <p>Precisamos de alguns dados básicos</p>
-  <form action="/signUpCompany" method="POST">
-
-    <label for="name">Empresa</label>
-    <input type="text" name="name" placeholder="Empresa">
-    <br>
-
-    <label for="phone">Telefone</label>
-    <input type="text" name="phone" placeholder="(00) 00000-0000">
-    <br>
-
-    <label for="email">Email</label>
-    <input type="email" name="email" placeholder="Esse será seu login">
-    <br>
-
-    <label for="password">Senha</label>
-    <input type="password" name="password" placeholder="Coloque sua Senha">
-    <br>
-
-    <label for="password">Senha</label>
-    <input type="password" name="password2" placeholder="Confirmar Senha">
-    <br>
-
-    <button type="submit">Confirmar</button>
-    <br>
-
+<div class="wrap-form">
+  <div class="container-voltar">
+    <a href="/signUp" class="alnk">
+      <img src="/images/back.svg" alt="Voltar" class="ico-back">
+      <span>
+        voltar
+      </span>
+    </a>
+  </div>
+  <div class="container-logo">
+    <img src="" alt="MobJobs">
+    <h1>MobJobs</h1>
+  </div>
+  <h2 class="subtitle">Precisamos de alguns dados básicos</h2>
+  <form action="/signUpCompany" method="POST" class="form-container">
+    <div class="input-container">
+      <label for="name">Empresa</label>
+      <input type="text" name="name" placeholder="Empresa" class="txtBox">
+    </div>
+    <div class="input-container">
+      <label for="phone">Telefone</label>
+      <input type="text" name="phone" placeholder="(00) 00000-0000" class="txtBox">
+    </div>
+    <div class="input-container__email">
+      <div class="input-container">
+        <label for="email">Email</label>
+        <input type="email" name="email" placeholder="Esse será seu login" class="txtBox txtBox-email">
+      </div>
+    </div>
+    <div class="input-container">
+      <label for="password">Senha</label>
+      <input type="password" name="password" placeholder="Coloque sua Senha" class="txtBox">
+    </div>
+    <div class="input-container">
+      <label for="password">Senha</label>
+      <input type="password" name="password2" placeholder="Confirmar Senha" class="txtBox">
+    </div>
+    <button type="submit" class="btn btnSubmit">Confirmar</button>
+    {{#if errorMessage}}
+    <p class="error-message">{{errorMessage}}</p>
+    {{/if}}
   </form>
-
-  {{#if errorMessage}}
-  <p>{{errorMessage}}</p>
-  {{/if}}
-
 </div>

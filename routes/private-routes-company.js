@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const express = require('express');
 const Company = require('../models/Company');
 const Post = require('../models/Post');
@@ -11,7 +12,9 @@ router.get('/home', async (req, res) => {
 });
 
 router.get('/perfil-company', async (req, res) => {
+  // eslint-disable-next-line no-underscore-dangle
   const perfil = await Company.findById(req.session.currentUser._id);
+  // eslint-disable-next-line no-underscore-dangle
   const myPosts = await Post.find({ authorId: req.session.currentUser._id });
   res.render('perfilCompany', { perfil, myPosts });
 });
@@ -28,7 +31,7 @@ router.post('/post', uploadCloud.single('imageUrl'), async (req, res) => {
   const { message } = req.body;
   if (!image || !message) {
     res.render('home', {
-      errorMessage: 'Por favor, preencha todos os campos obrigatórios!'
+      errorMessage: 'Por favor, preencha todos os campos obrigatórios!',
     });
     return;
   }
@@ -51,15 +54,14 @@ router.post(
   uploadCloud.fields([
     {
       name: 'imagePerfil',
-      maxCount: 1
+      maxCount: 1,
     },
     {
       name: 'imageCapa',
-      maxCount: 1
-    }
+      maxCount: 1,
+    },
   ]),
   async (req, res) => {
-    console.log(req.body);
     if (req.files) {
       if (req.files.imagePerfil && req.files.imagePerfil.length > 0) {
         req.body.imagePerfil = req.files.imagePerfil[0].url;
@@ -70,15 +72,13 @@ router.post(
     }
     try {
       await Company.findByIdAndUpdate(req.session.currentUser._id, req.body);
-      console.log(req.body);
-
       return res.redirect('/perfil-company');
     } catch (err) {
       return res.render('error', {
-        errorMessage: `Erro ao editar Company: ${err}`
+        errorMessage: `Erro ao editar Company: ${err}`,
       });
     }
-  }
+  },
 );
 
 module.exports = router;

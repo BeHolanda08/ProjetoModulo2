@@ -1,34 +1,115 @@
-<h1>Pagina principal aqui</h1>
 
-<form action="/post" class="container-addPost" method="POST" enctype="multipart/form-data">
-  <input type="file" name="imageUrl" placeholder="Insira imagem">
-  <br>
-  <textarea name="message" placeholder="Entre com a mensagem"></textarea>
-  <br>
-  <button type="submit">Enviar</button>
-  <br>
-</form>
+<div class="wrap-main">
+  <div class="nav-bar">
+    <a href="" class="logo">
+      <img src="/images/logo.png" alt="MobJobs">
+    </a>
+    <div id="search-container" class="search-container">
+      <input type="text" placeholder="Filtre aqui pessoas ou páginas" class="txtBoxSearch">
+      <a href=""><img src="/images/search.svg" class="lnk-search"></a>
+      <img src="/images/close.svg" id="lnk-close" class="lnk-close">
+    </div>
+    <ul class="icons-container">
+      <li>
+        <a href="" class="icon" id="search_icon_responsive">
+          <img src="/images/search_white.svg" alt="Conferência" class="icons-container__icon">
+          <span class="icons-container__text">Fazer conferência</span>
+        </a>
+      </li>
+      <li>
+        <a href="" class="icon">
+          <img src="/images/conf.svg" alt="Conferência" class="icons-container__icon">
+          <span class="icons-container__text">Fazer conferência</span>
+        </a>
+      </li>
+      <li>
+        <a href="" class="icon">
+          <img src="/images/friendship.svg" alt="Solicitação de amizade" class="icons-container__icon">
+          <span class="icons-container__text">Solicitação de amizades</span>
+        </a>
+      </li>
+      <li>
+        <a href="" class="icon">
+          <img src="/images/message.svg" alt="Mensagem" class="icons-container__icon">
+          <span class="icons-container__text">Solicitação de amizades</span>
+        </a>
+      </li>
+      <li>
+        <a href="" class="icon">
+          <img src="/images/notification.svg" alt="Notificações" class="icons-container__icon">
+          <span class="icons-container__text">Solicitação de amizades</span>
+        </a>
+      </li>
+    </ul>
+    <div class="profile-container">
+      {{#if perfilCandidate.imagePerfil}}
+        <img src={{perfilCandidate.imagePerfil}} alt={{perfilCandidate.name}} class="photo-profile">
+      {{/if}}
+      {{#if perfilCompany.imagePerfil}}
+        <img src={{perfilCompany.imagePerfil}} alt={{perfilCompany.name}} class="photo-profile">
+      {{/if}}
+      <div class="container-profile_name_lnk">
+        {{#if perfilCandidate.name}}
+          <p>{{perfilCandidate.name}}</p>
+        {{/if}}
+        {{#if perfilCompany.name}}
+          <p>{{perfilCompany.name}}</p>
+        {{/if}}
+        
+        <ul class="lnks-profile">
+          <li><a href="/perfil-candidate" class="lnk-profile">Perfil</a></li>
+          <li><a href="/" class="lnk-profile">Logout</a></li>
+        </ul>
+      </div>
 
-<a href="/perfil-candidate">Perfil Candidato </a>
-<br>
-<a href="/perfil-company">Perfil Empresa</a>
-
-<hr>
-<h3>Todos os Posts</h3>
-{{#each allPosts}}
-<div class="post-container">
-
-  <img src="{{ image }}" width="200" height="100">
-  <p>{{ message }}</p>
+    </div>
+  </div>
+  <div class="content">
+    <div class="middle-column">
+      <div class="container__create-container">
+      {{#if perfilCandidate.imagePerfil}}
+        <img src={{perfilCandidate.imagePerfil}} alt={{perfilCandidate.name}} class="img-perfil-post">
+      {{/if}}
+      {{#if perfilCompany.imagePerfil}}
+        <img src={{perfilCompany.imagePerfil}} alt={{perfilCompany.name}} class="img-perfil-post">
+      {{/if}}
+        <form action="/post" class="container-addPost" method="POST" enctype="multipart/form-data">
+          <textarea name="message" placeholder="Compartilhe o seu momento..." class="txtArea-post"></textarea>
+          <div class="container-submit-post">
+            <button type="submit" class="btnSubmit-post">Enviar</button>
+            <label for='imageUrl' class="imageUrl"></label>
+            <input type="file" id="imageUrl" name="imageUrl" placeholder="Insira imagem" class="upload-post">
+          </div>
+        </form>
+        {{#if errorMessage}}
+        <p>{{errorMessage}}</p>
+        {{/if}}
+      </div>
+      <div class="container-post">
+        {{#each complete}}
+        <div class="post-container">
+          <div class="post-container__profile">
+            <div class="imgProfile">
+              
+                <img src={{profile.imagePerfil}} alt={{profile.name}} class="img-perfil-post">
+            </div>
+            <div class="txtProfile">
+                <p>{{profile.name}}</p>
+            </div>
+          </div>
+          <div class="post-container__post">
+            <img src="{{ image }}" class="post-container__img">
+            <p class="post-container__txt">{{ message }}</p>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
 </div>
-{{/each}}
 
 
-<a href="/perfil-candidate">Perfil Candidato </a>
-<br>
-<a href="/perfil-company">Perfil Empresa</a>
-<br>
-<br>
-<footer>
-  <a href="/">Logout</a>
-</footer>
+
+
+
+

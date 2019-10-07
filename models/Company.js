@@ -15,8 +15,8 @@ const companySchema = new Schema({
   complement: String,
   city: String,
   state: String,
-  zipCode: String,
-  site: String
+  zipCode: Number,
+  site: String,
 });
 
 const Company = mongoose.model('Company', companySchema);

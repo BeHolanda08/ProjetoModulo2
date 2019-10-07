@@ -6,15 +6,31 @@ const Company = require('../models/Company');
 const router = express.Router();
 const saltRounds = 10;
 
+
+const validator = (item) => {
+  const emailValidator = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+  const emailIsValid = emailValidator.test(item);
+
+  return emailIsValid;
+};
+
 router.get('/', (req, res) => {
   res.render('index');
 });
 
 router.post('/', async (req, res) => {
   const { email, password } = req.body;
+
   if (!email || !password) {
     res.render('index', {
-      errorMessage: 'Por favor, preencha todos os campos obrigatórios!'
+      errorMessage: 'Por favor, preencha todos os campos obrigatórios!',
+    });
+    return;
+  }
+
+  if (!validator(email)) {
+    res.render('index', {
+      errorMessage: 'Por favor, preencha o e-mail corretamente',
     });
     return;
   }
@@ -49,26 +65,35 @@ router.get('/signUpCandidate', (req, res) => {
 
 // eslint-disable-next-line consistent-return
 router.post('/signUpCandidate', async (req, res) => {
-  const { name, email, password, password2, surname, celPhone } = req.body;
+  const {
+    name, email, password, password2, surname, celPhone,
+  } = req.body;
 
   // validação de candidate
   if (!name || !email || !password || !surname || !celPhone) {
     return res.render('signUpCandidate', {
-      errorMessage: 'Por favor, preencha todos os campos obrigatórios!'
+      errorMessage: 'Por favor, preencha todos os campos obrigatórios!',
     });
   }
 
   if (password !== password2) {
     return res.render('signUpCandidate', {
-      errorMessage: 'Senha não confere!'
+      errorMessage: 'Senha não confere!',
+    });
+  }
+
+  if (!validator(email)) {
+    return res.render('signUpCandidate', {
+      errorMessage: 'Por favor, preencha o e-mail corretamente',
     });
   }
 
   if (Candidate.findOne({ email })) {
     return res.render('signUpCandidate', {
-      errorMessage: 'Usuário já cadastrado!'
+      errorMessage: 'Usuário já cadastrado!',
     });
   }
+
 
   try {
     const salt = bcrypt.genSaltSync(saltRounds);
@@ -78,11 +103,12 @@ router.post('/signUpCandidate', async (req, res) => {
       email,
       password: hash,
       surname,
-      celPhone
+      celPhone,
     });
     await newCandidate.save();
     res.redirect('/');
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(error, 'Erro de Login!');
   }
 });
@@ -93,17 +119,25 @@ router.get('/signUpCompany', (req, res) => {
 
 // eslint-disable-next-line consistent-return
 router.post('/signUpCompany', async (req, res) => {
-  const { name, phone, email, password, password2 } = req.body;
+  const {
+    name, phone, email, password, password2,
+  } = req.body;
 
   // validação de company
   if (!name || !phone || !email || !password) {
     return res.send('signUpCompany', {
-      errorMessage: 'Por favor, preencha todos os campos Obrigatórios!'
+      errorMessage: 'Por favor, preencha todos os campos Obrigatórios!',
     });
   }
 
   if (password !== password2) {
     return res.render('signUpCompany', { errorMessage: 'Senha não confere!' });
+  }
+
+  if (!validator(email)) {
+    return res.render('signUpCandidate', {
+      errorMessage: 'Por favor, preencha o e-mail corretamente',
+    });
   }
 
   if (await Company.findOne({ email })) {
@@ -117,11 +151,12 @@ router.post('/signUpCompany', async (req, res) => {
       name,
       phone,
       email,
-      password: hash
+      password: hash,
     });
     await newCompany.save();
     res.redirect('/');
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(error, 'Erro de Login!');
   }
 });
@@ -131,11 +166,14 @@ router.get('/forgotPassword', (req, res) => {
 });
 
 // eslint-disable-next-line consistent-return
-router.post('/forgotPassword', (req, res) => {
+router.post('/forgotPassword', async (req, res) => {
   const { email } = req.body;
-  if (!email) {
-    return res.render('forgotPassword');
+  if (!validator(email)) {
+    return res.render('forgotPassword', {
+      errorMessage: 'Por favor, preencha o e-mail corretamente',
+    });
   }
+  return res.render('passwordSubmission');
 });
 
 router.get('/passwordSubmission', (req, res) => {
@@ -143,8 +181,9 @@ router.get('/passwordSubmission', (req, res) => {
 });
 
 router.get('/logout', (req, res) => {
-  req.session.destroy(error => {
+  req.session.destroy((error) => {
     if (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     } else {
       res.redirect('/');

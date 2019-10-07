@@ -21,7 +21,7 @@ const options = {
   reconnectInterval: 500,
   poolSize: 5,
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 };
 
 // Mongoose
@@ -29,19 +29,23 @@ const options = {
 mongoose.connect(url, options);
 mongoose.set('useCreatIndex', true);
 
-mongoose.connection.on('error', err => {
+mongoose.connection.on('error', (err) => {
+  // eslint-disable-next-line no-console
   console.log(`Erro na conexão com o banco de Dados: ${err}`);
 });
 
 mongoose.connection.on('disconnected', () => {
+  // eslint-disable-next-line no-console
   console.log('Aplicação desconectada do banco de Dados!');
 });
 
 mongoose.connection.on('connected', () => {
+  // eslint-disable-next-line no-console
   console.log('Aplicação conectada com o banco de Dados!');
 });
 
 app.set('views', `${__dirname}/views`);
+app.use(express.static('public'));
 app.set('view engine', 'hbs');
 
 // Body-Parser
@@ -57,12 +61,12 @@ app.use(
     cookie: { maxAge: 600000 },
     store: new MongoStore({
       mongooseConnection: mongoose.connection,
-      ttl: 24 * 60 * 60
+      ttl: 24 * 60 * 60,
     }),
     proxy: true,
     resave: true,
-    saveUninitialized: true
-  })
+    saveUninitialized: true,
+  }),
 );
 
 app.use('/', authRouter);
@@ -80,6 +84,7 @@ app.use('/', privateRoutesCandidate);
 app.use('/', privateRoutesCompany);
 
 app.listen(process.env.PORT, () => {
+  // eslint-disable-next-line no-console
   console.log('Express rodando');
 });
 
