@@ -16,7 +16,7 @@ const companySchema = new Schema({
   city: String,
   state: String,
   zipCode: Number,
-  site: String
+  site: String,
 });
 
 const Company = mongoose.model('Company', companySchema);

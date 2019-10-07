@@ -1,16 +1,35 @@
+/* eslint-disable no-underscore-dangle */
 const express = require('express');
 const Candidate = require('../models/Candidate');
+const Company = require('../models/Company');
 const Post = require('../models/Post');
 const uploadCloud = require('../config/cloudinary.js');
 
 const router = express.Router();
-
+let completeObject = {};
+let completePosts = [];
+let complete = [];
+    
 router.get('/home', async (req, res) => {
   const allPosts = await Post.find();
-  res.render('home', { allPosts });
+  allPosts.forEach(async (item, index) => { 
+    completePosts[index] = item;
+    completePosts[index].profile = await Candidate.findById(item.authorId);
+    return completePosts[index];
+  });
+
+  complete = completePosts;
+
+  const perfilCandidate = await Candidate.findById(req.session.currentUser._id);
+  const perfilCompany = await Company.findById(req.session.currentUser._id);
+
+  res.render('home', {
+    allPosts, perfilCandidate, perfilCompany, complete,
+  });
 });
 
 router.get('/perfil-candidate', async (req, res) => {
+  // eslint-disable-next-line no-underscore-dangle
   const perfil = await Candidate.findById(req.session.currentUser._id);
   const myPosts = await Post.find({ authorId: req.session.currentUser._id });
   res.render('perfilCandidate', { perfil, myPosts });
@@ -28,7 +47,7 @@ router.post('/post', uploadCloud.single('imageUrl'), async (req, res) => {
   const { message } = req.body;
   if (!image || !message) {
     res.render('home', {
-      errorMessage: 'Por favor, preencha todos os campos obrigatórios!'
+      errorMessage: 'Por favor, preencha todos os campos obrigatórios!',
     });
     return;
   }
@@ -66,7 +85,7 @@ router.post(
       link1,
       link2,
       link3,
-      link4
+      link4,
     } = req.body;
     try {
       await Candidate.findByIdAndUpdate(req.session.currentUser._id, {
@@ -84,16 +103,16 @@ router.post(
         link3,
         link4,
         imagePerfil,
-        imageCapa
+        imageCapa,
       });
 
       return res.redirect('/perfil-candidate');
     } catch (err) {
       return res.render('error', {
-        errorMessage: `Erro ao editar Candidato: ${err}`
+        errorMessage: `Erro ao editar Candidato: ${err}`,
       });
     }
-  }
+  },
 );
 
 module.exports = router;
