@@ -6,49 +6,76 @@
 
         <label for="text">Nome</label>
         <input type="text" name="name" placeholder="Nome" value="{{ name }}">
+        <br>
 
         <label for="text">Sobrenome</label>
         <input type="text" name="surname" placeholder="Sobrenome" value="{{surname}}">
+        <br>
+
+        <label for="text">Celular</label>
+        <input type="text" name="celPhone" placeholder="Ex.: (00) 00000-0000" maxlength="11" autocomplete="off"
+            value="{{ celPhone }}">
+        <br>
 
         <label for="text">Imagem Perfil</label>
-        <input type="file" name="images" placeholder="Imagem Capa" value="{{imagePerfil}}">
+        <input type="file" name="imagePerfil" placeholder="Imagem Perfil" value="{{ imagePerfil }}">
+        {{!-- <img src="{{ imagePerfil }}" width="120px" /> --}}
+        <br>
 
         <label for="text">Imagem Capa</label>
-        <input type="file" name="images" placeholder="Imagem Perfil" value="{{imageCapa}}">
+        <input type="file" name="imageCapa" placeholder="Imagem Capa" value="{{ imageCapa }}">
+        {{!-- <img src="{{ imageCapa }}" width="120px" /> --}}
+        <br>
 
         <label for="text">Habilidades</label>
-        <input type="text" name="skills" placeholder="Habilidades" valeu="{{ skills }}">
+        <input type="text" name="skill" placeholder="Habilidades" value="{{ skill }}">
+        <br>
 
         <label for="text">Endereço</label>
         <input type="text" name="address" placeholder="Endereço" value="{{ address }}">
+        <br>
 
         <label for="text">Número</label>
         <input type="number" name="number" placeholder="Número" value="{{ number }}">
+        <br>
 
         <label for="text">Complemento</label>
         <input type="text" name="complement" placeholder="Complemento" value="{{ complement }}">
+        <br>
 
         <label for="text">Cidade</label>
         <input type="text" name="city" placeholder="Cidade" value="{{ city }}">
+        <br>
 
         <label for="text">Estado</label>
         <input type="text" name="state" placeholder="Estado" value="{{ state }}">
+        <br>
 
         <label for="text">Cep</label>
         <input type="text" name="zipCode" placeholder="Cep" value="{{ zipCode }}">
+        <br>
 
         <label for="text">Link</label>
         <input type="text" name="link1" placeholder="Linkedin" value="{{ link1 }}">
+        <br>
 
         <label for="text">Link</label>
         <input type="text" name="link2" placeholder="Link Intagram" value="{{ link2 }}">
+        <br>
 
         <label for="text">Link</label>
         <input type="text" name="link3" placeholder="Link Facebook" value="{{ link3 }}">
+        <br>
 
         <label for="text">Link</label>
         <input type="text" name="link4" placeholder="GitHub" value="{{ link4 }}">
+        <br>
 
         <button type="submit">Confirmar</button>
+        <br>
+        <a href="./perfilCandidate">Perfil</a>
+        <br>
+        <a href="./home">Home</a>
+
     </form>
 </div>

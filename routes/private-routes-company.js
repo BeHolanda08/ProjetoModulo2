@@ -51,49 +51,31 @@ router.get('/update-perfil-company/:editId', async (req, res) => {
 
 router.post(
   '/update-perfil-company',
-  uploadCloud.array('images', 2),
+  uploadCloud.fields([
+    {
+      name: 'imagePerfil',
+      maxCount: 1,
+    },
+    {
+      name: 'imageCapa',
+      maxCount: 1,
+    },
+  ]),
   async (req, res) => {
-    const images = req.files;
-    const imagePerfil = images[0].url;
-    const imageCapa = images[1].url;
-    const {
-      name,
-      surname,
-      skills,
-      address,
-      number,
-      complement,
-      city,
-      state,
-      zipCode,
-      link1,
-      link2,
-      link3,
-      link4,
-    } = req.body;
+    if (req.files) {
+      if (req.files.imagePerfil && req.files.imagePerfil.length > 0) {
+        req.body.imagePerfil = req.files.imagePerfil[0].url;
+      }
+      if (req.files.imageCapa && req.files.imageCapa.length > 0) {
+        req.body.imageCapa = req.files.imageCapa[0].url;
+      }
+    }
     try {
-      await Company.findByIdAndUpdate(req.session.currentUser._id, {
-        name,
-        surname,
-        skills,
-        address,
-        number,
-        complement,
-        city,
-        state,
-        zipCode,
-        link1,
-        link2,
-        link3,
-        link4,
-        imagePerfil,
-        imageCapa,
-      });
-
+      await Company.findByIdAndUpdate(req.session.currentUser._id, req.body);
       return res.redirect('/perfil-company');
     } catch (err) {
       return res.render('error', {
-        errorMessage: `Erro ao editar Candidato: ${err}`,
+        errorMessage: `Erro ao editar Company: ${err}`,
       });
     }
   },

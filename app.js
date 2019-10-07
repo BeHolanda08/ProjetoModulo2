@@ -17,7 +17,6 @@ const app = express();
 
 const url = process.env.DB_HOST;
 const options = {
-  // eslint-disable-next-line max-len
   reconnectTries: Number.MAX_VALUE,
   reconnectInterval: 500,
   poolSize: 5,

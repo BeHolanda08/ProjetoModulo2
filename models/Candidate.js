@@ -10,7 +10,7 @@ const candidateSchema = new Schema({
   password: { type: String, required: true },
   imagePerfil: String,
   imageCapa: String,
-  skills: String,
+  skill: String,
   address: String,
   number: Number,
   complement: String,

@@ -6,13 +6,12 @@ const Post = require('../models/Post');
 const uploadCloud = require('../config/cloudinary.js');
 
 const router = express.Router();
-let completeObject = {};
-let completePosts = [];
+const completePosts = [];
 let complete = [];
-    
+
 router.get('/home', async (req, res) => {
   const allPosts = await Post.find();
-  allPosts.forEach(async (item, index) => { 
+  allPosts.forEach(async (item, index) => {
     completePosts[index] = item;
     completePosts[index].profile = await Candidate.findById(item.authorId);
     return completePosts[index];
@@ -67,44 +66,27 @@ router.get('/update-perfil-candidate/:editId', async (req, res) => {
 
 router.post(
   '/update-perfil-candidate',
-  uploadCloud.array('images', 2),
+  uploadCloud.fields([
+    {
+      name: 'imagePerfil',
+      maxCount: 1,
+    },
+    {
+      name: 'imageCapa',
+      maxCount: 1,
+    },
+  ]),
   async (req, res) => {
-    const images = req.files;
-    const imagePerfil = images[0].url;
-    const imageCapa = images[1].url;
-    const {
-      name,
-      surname,
-      skills,
-      address,
-      number,
-      complement,
-      city,
-      state,
-      zipCode,
-      link1,
-      link2,
-      link3,
-      link4,
-    } = req.body;
+    if (req.files) {
+      if (req.files.imagePerfil && req.files.imagePerfil.length > 0) {
+        req.body.imagePerfil = req.files.imagePerfil[0].url;
+      }
+      if (req.files.imageCapa && req.files.imageCapa.length > 0) {
+        req.body.imageCapa = req.files.imageCapa[0].url;
+      }
+    }
     try {
-      await Candidate.findByIdAndUpdate(req.session.currentUser._id, {
-        name,
-        surname,
-        skills,
-        address,
-        number,
-        complement,
-        city,
-        state,
-        zipCode,
-        link1,
-        link2,
-        link3,
-        link4,
-        imagePerfil,
-        imageCapa,
-      });
+      await Candidate.findByIdAndUpdate(req.session.currentUser._id, req.body);
 
       return res.redirect('/perfil-candidate');
     } catch (err) {
