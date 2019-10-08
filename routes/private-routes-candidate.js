@@ -10,10 +10,19 @@ const completePosts = [];
 let complete = [];
 
 router.get('/home', async (req, res) => {
-  const allPosts = await Post.find();
+  const allPosts = await Post.find().sort([['date', -1]]);
   allPosts.forEach(async (item, index) => {
     completePosts[index] = item;
     completePosts[index].profile = await Candidate.findById(item.authorId);
+    //Handlebars
+    const applysInfo = completePosts[index].candidatesId.split(',');
+
+    applysInfo.forEach((elem) => {
+      if (elem === req.session.currentUser._id) {
+        completePosts[index].apply = true;
+      }
+    });
+
     return completePosts[index];
   });
 
@@ -22,9 +31,13 @@ router.get('/home', async (req, res) => {
   const perfilCandidate = await Candidate.findById(req.session.currentUser._id);
   const perfilCompany = await Company.findById(req.session.currentUser._id);
 
-  res.render('home', {
-    allPosts, perfilCandidate, perfilCompany, complete,
-  });
+  // for (let i = 0; i < complete.length; i += 1) {
+  //   if(complete[i].candidatesId === req.session.currentUser._id){
+  //     complete[i].candidatesId;
+  //   }
+  // }
+
+  res.render('home', { perfilCandidate, perfilCompany, complete });
 });
 
 router.get('/perfil-candidate', async (req, res) => {
@@ -59,42 +72,166 @@ router.post('/post', uploadCloud.single('imageUrl'), async (req, res) => {
   res.redirect('/home');
 });
 
+router.get('/apply-post/:postId', async (req, res) => {
+  const selectedPost = await Post.findById(req.params.postId);
+
+  if (!selectedPost.candidatesId) {
+    //Realiza a candidatura do Candidato
+    const filter = { candidatesId: undefined };
+    const update = { candidatesId: req.session.currentUser._id };
+    await Post.updateOne( filter, update);
+    //Recarrega a página
+    const allPosts = await Post.find();
+    allPosts.forEach(async (item, index) => {
+      completePosts[index] = item;
+      completePosts[index].profile = await Candidate.findById(item.authorId);
+      return completePosts[index];
+    });
+
+    complete = completePosts;
+
+    const perfilCandidate = await Candidate.findById(req.session.currentUser._id);
+    const perfilCompany = await Company.findById(req.session.currentUser._id);
+
+    res.send('home', { perfilCandidate, perfilCompany, complete });
+  } else if (selectedPost.candidatesId !== req.session.currentUser._id) {
+    //Realiza a candidatura do Candidato se os ids cadastrados forem diferentes
+    const filter = { candidatesId: selectedPost.candidatesId };
+    const update = { candidatesId: `${selectedPost.candidatesId},${req.session.currentUser._id}` };
+    await Post.updateOne( filter, update);
+    //Recarrega a página
+    const allPosts = await Post.find();
+    allPosts.forEach(async (item, index) => {
+      completePosts[index] = item;
+      completePosts[index].profile = await Candidate.findById(item.authorId);
+      return completePosts[index];
+    });
+
+    complete = completePosts;
+
+    const perfilCandidate = await Candidate.findById(req.session.currentUser._id);
+    const perfilCompany = await Company.findById(req.session.currentUser._id);
+
+    res.send('home', { perfilCandidate, perfilCompany, complete });
+  } else {
+      //retira a candidatura do Candidato se os ids cadastrados forem diferentes
+    const filter = { candidatesId: req.session.currentUser._id };
+    const update = { candidatesId: undefined };
+    await Post.updateOne( filter, update);
+    //Recarrega a página
+    const allPosts = await Post.find();
+    allPosts.forEach(async (item, index) => {
+      completePosts[index] = item;
+      completePosts[index].profile = await Candidate.findById(item.authorId);
+      return completePosts[index];
+    });
+
+    complete = completePosts;
+
+    const perfilCandidate = await Candidate.findById(req.session.currentUser._id);
+    const perfilCompany = await Company.findById(req.session.currentUser._id);
+
+    res.send('home', { perfilCandidate, perfilCompany, complete });
+  }
+});
+
+router.get('/message-post/:postId', async (req, res) => {
+  const selectedPost = await Post.findById(req.params.postId);
+
+  if (!selectedPost.candidatesId) {
+    //Realiza a candidatura do Candidato
+    const filter = { candidatesId: undefined };
+    const update = { candidatesId: req.session.currentUser._id };
+    await Post.updateOne( filter, update);
+    //Recarrega a página
+    const allPosts = await Post.find();
+    allPosts.forEach(async (item, index) => {
+      completePosts[index] = item;
+      completePosts[index].profile = await Candidate.findById(item.authorId);
+      return completePosts[index];
+    });
+
+    complete = completePosts;
+
+    const perfilCandidate = await Candidate.findById(req.session.currentUser._id);
+    const perfilCompany = await Company.findById(req.session.currentUser._id);
+
+    res.send('home', { perfilCandidate, perfilCompany, complete });
+  } else if (selectedPost.candidatesId !== req.session.currentUser._id) {
+    //Realiza a candidatura do Candidato se os ids cadastrados forem diferentes
+    const filter = { candidatesId: selectedPost.candidatesId };
+    const update = { candidatesId: `${selectedPost.candidatesId},${req.session.currentUser._id}` };
+    await Post.updateOne( filter, update);
+    //Recarrega a página
+    const allPosts = await Post.find();
+    allPosts.forEach(async (item, index) => {
+      completePosts[index] = item;
+      completePosts[index].profile = await Candidate.findById(item.authorId);
+      return completePosts[index];
+    });
+
+    complete = completePosts;
+
+    const perfilCandidate = await Candidate.findById(req.session.currentUser._id);
+    const perfilCompany = await Company.findById(req.session.currentUser._id);
+
+    res.send('home', { perfilCandidate, perfilCompany, complete });
+  } else {
+      //retira a candidatura do Candidato se os ids cadastrados forem diferentes
+    const filter = { candidatesId: req.session.currentUser._id };
+    const update = { candidatesId: undefined };
+    await Post.updateOne( filter, update);
+    //Recarrega a página
+    const allPosts = await Post.find();
+    allPosts.forEach(async (item, index) => {
+      completePosts[index] = item;
+      completePosts[index].profile = await Candidate.findById(item.authorId);
+      return completePosts[index];
+    });
+
+    complete = completePosts;
+
+    const perfilCandidate = await Candidate.findById(req.session.currentUser._id);
+    const perfilCompany = await Company.findById(req.session.currentUser._id);
+
+    res.send('home', { perfilCandidate, perfilCompany, complete });
+  }
+});
+
 router.get('/update-perfil-candidate/:editId', async (req, res) => {
   const updatePerfil = await Candidate.findById(req.params.editId);
   return res.render('perfilCandidateComplete', updatePerfil);
 });
 
-router.post(
-  '/update-perfil-candidate',
-  uploadCloud.fields([
-    {
-      name: 'imagePerfil',
-      maxCount: 1,
-    },
-    {
-      name: 'imageCapa',
-      maxCount: 1,
-    },
-  ]),
-  async (req, res) => {
-    if (req.files) {
-      if (req.files.imagePerfil && req.files.imagePerfil.length > 0) {
-        req.body.imagePerfil = req.files.imagePerfil[0].url;
-      }
-      if (req.files.imageCapa && req.files.imageCapa.length > 0) {
-        req.body.imageCapa = req.files.imageCapa[0].url;
-      }
-    }
-    try {
-      await Candidate.findByIdAndUpdate(req.session.currentUser._id, req.body);
-
-      return res.redirect('/perfil-candidate');
-    } catch (err) {
-      return res.render('error', {
-        errorMessage: `Erro ao editar Candidato: ${err}`,
-      });
-    }
+router.post('/update-perfil-candidate', uploadCloud.fields([
+  {
+    name: 'imagePerfil',
+    maxCount: 1,
   },
+  {
+    name: 'imageCapa',
+    maxCount: 1,
+  },
+]),
+async (req, res) => {
+  if (req.files) {
+    if (req.files.imagePerfil && req.files.imagePerfil.length > 0) {
+      req.body.imagePerfil = req.files.imagePerfil[0].url;
+    }
+    if (req.files.imageCapa && req.files.imageCapa.length > 0) {
+      req.body.imageCapa = req.files.imageCapa[0].url;
+    }
+  }
+  try {
+    await Candidate.findByIdAndUpdate(req.session.currentUser._id, req.body);
+
+    return res.redirect('/perfil-candidate');
+  } catch (err) {
+    return res.render('error', {
+      errorMessage: `Erro ao editar Candidato: ${err}`,
+    });
+  }
+},
 );
 
 module.exports = router;

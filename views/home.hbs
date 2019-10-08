@@ -65,7 +65,7 @@
     </div>
   </div>
   <div class="content">
-    <div class="middle-column">
+    <div class="middle-column">      
       <div class="container__create-container">
       {{#if perfilCandidate.imagePerfil}}
         <img src={{perfilCandidate.imagePerfil}} alt={{perfilCandidate.name}} class="img-perfil-post">
@@ -90,16 +90,33 @@
         <div class="post-container">
           <div class="post-container__profile">
             <div class="imgProfile">
-              
                 <img src={{profile.imagePerfil}} alt={{profile.name}} class="img-perfil-post">
             </div>
             <div class="txtProfile">
                 <p>{{profile.name}}</p>
+                <p>{{date}}</p>
             </div>
           </div>
           <div class="post-container__post">
             <img src="{{ image }}" class="post-container__img">
             <p class="post-container__txt">{{ message }}</p>
+          </div>
+          <div class="post-container__actions">
+            
+            <a href="/apply-post/{{_id}}"class="post-container__actions-frm">
+              {{#if apply}}
+                <p>Aguarde, sua candidatura esta sendo avaliada</p>
+              {{/if}}
+              {{#unless apply}}
+                <p>Candidatar-se</p>
+              {{/unless}}
+            </a>
+            <a href="/comment-post/{{_id}}" class="post-container__actions-frm">
+              Comentar
+            </a>
+            <a href="/share-post/{{_id}}" class="post-container__actions-frm">
+              Compartilhar
+            </a>
           </div>
         </div>
         {{/each}}
