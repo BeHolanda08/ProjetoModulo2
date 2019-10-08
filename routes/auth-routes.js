@@ -87,8 +87,7 @@ router.post('/signUpCandidate', async (req, res) => {
       errorMessage: 'Por favor, preencha o e-mail corretamente',
     });
   }
-
-  if (Candidate.findOne({ email })) {
+  if (await Candidate.findOne({ email })) {
     return res.render('signUpCandidate', {
       errorMessage: 'Usuário já cadastrado!',
     });

@@ -14,6 +14,15 @@ router.get('/home', async (req, res) => {
   allPosts.forEach(async (item, index) => {
     completePosts[index] = item;
     completePosts[index].profile = await Candidate.findById(item.authorId);
+    //Handlebars
+    const applysInfo = completePosts[index].candidatesId.split(',');
+    
+    applysInfo.forEach((elem) => {
+      if (elem === req.session.currentUser._id) {
+        completePosts[index].apply = true;
+      }
+    });
+
     return completePosts[index];
   });
 
@@ -22,9 +31,13 @@ router.get('/home', async (req, res) => {
   const perfilCandidate = await Candidate.findById(req.session.currentUser._id);
   const perfilCompany = await Company.findById(req.session.currentUser._id);
 
-  res.render('home', {
-    allPosts, perfilCandidate, perfilCompany, complete,
-  });
+  // for (let i = 0; i < complete.length; i += 1) {
+  //   if(complete[i].candidatesId === req.session.currentUser._id){
+  //     complete[i].candidatesId;
+  //   }
+  // }
+
+  res.render('home', { perfilCandidate, perfilCompany, complete });
 });
 
 router.get('/perfil-candidate', async (req, res) => {
@@ -59,13 +72,75 @@ router.post('/post', uploadCloud.single('imageUrl'), async (req, res) => {
   res.redirect('/home');
 });
 
+router.get('/apply-post/:postId', async (req, res) => {
+  const selectedPost = await Post.findById(req.params.postId);
+
+  if (!selectedPost.candidatesId) {
+    //Realiza a candidatura do Candidato
+    const filter = { candidatesId: undefined };
+    const update = { candidatesId: req.session.currentUser._id };
+    await Post.updateOne( filter, update);
+    //Recarrega a página
+    const allPosts = await Post.find();
+    allPosts.forEach(async (item, index) => {
+      completePosts[index] = item;
+      completePosts[index].profile = await Candidate.findById(item.authorId);
+      return completePosts[index];
+    });
+
+    complete = completePosts;
+
+    const perfilCandidate = await Candidate.findById(req.session.currentUser._id);
+    const perfilCompany = await Company.findById(req.session.currentUser._id);
+
+    res.send('home', { perfilCandidate, perfilCompany, complete });
+  } else if (selectedPost.candidatesId !== req.session.currentUser._id) {
+    //Realiza a candidatura do Candidato se os ids cadastrados forem diferentes
+    const filter = { candidatesId: selectedPost.candidatesId };
+    const update = { candidatesId: `${selectedPost.candidatesId},${req.session.currentUser._id}` };
+    await Post.updateOne( filter, update);
+    //Recarrega a página
+    const allPosts = await Post.find();
+    allPosts.forEach(async (item, index) => {
+      completePosts[index] = item;
+      completePosts[index].profile = await Candidate.findById(item.authorId);
+      return completePosts[index];
+    });
+
+    complete = completePosts;
+
+    const perfilCandidate = await Candidate.findById(req.session.currentUser._id);
+    const perfilCompany = await Company.findById(req.session.currentUser._id);
+
+    res.send('home', { perfilCandidate, perfilCompany, complete });
+  } else {
+      //retira a candidatura do Candidato se os ids cadastrados forem diferentes
+    const filter = { candidatesId: req.session.currentUser._id };
+    const update = { candidatesId: undefined };
+    await Post.updateOne( filter, update);
+    //Recarrega a página
+    const allPosts = await Post.find();
+    allPosts.forEach(async (item, index) => {
+      completePosts[index] = item;
+      completePosts[index].profile = await Candidate.findById(item.authorId);
+      return completePosts[index];
+    });
+
+    complete = completePosts;
+
+    const perfilCandidate = await Candidate.findById(req.session.currentUser._id);
+    const perfilCompany = await Company.findById(req.session.currentUser._id);
+
+    res.send('home', { perfilCandidate, perfilCompany, complete });
+  }
+});
+
 router.get('/update-perfil-candidate/:editId', async (req, res) => {
   const updatePerfil = await Candidate.findById(req.params.editId);
   return res.render('perfilCandidateComplete', updatePerfil);
 });
 
-router.post(
-  '/update-perfil-candidate',
+router.post('/update-perfil-candidate',
   uploadCloud.fields([
     {
       name: 'imagePerfil',
