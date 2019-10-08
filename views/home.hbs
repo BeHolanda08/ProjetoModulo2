@@ -98,8 +98,14 @@
               {{/if}}
             </div>
             <div class="txtProfile">
-                <p>{{profile.name}}</p>
-                <p>{{date}}</p>
+              {{#if profileCandidate}}
+                <p class="txtProfile__profile-name">{{profileCandidate.name}}</p>
+                <p class="txtProfile__profile-data">{{date}}</p>
+              {{/if}}
+              {{#if profileCompany}}
+                <p class="txtProfile__profile-name">{{profileCompany.name}}</p>
+                <p class="txtProfile__profile-data">{{date}}</p>
+              {{/if}}
             </div>
           </div>
           <div class="post-container__post">

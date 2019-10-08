@@ -32,12 +32,6 @@ router.get('/home', async (req, res) => {
   const perfilCandidate = await Candidate.findById(req.session.currentUser._id);
   const perfilCompany = await Company.findById(req.session.currentUser._id);
 
-  // for (let i = 0; i < complete.length; i += 1) {
-  //   if(complete[i].candidatesId === req.session.currentUser._id){
-  //     complete[i].candidatesId;
-  //   }
-  // }
-
   res.render('home', { perfilCandidate, perfilCompany, complete });
 });
 
@@ -85,7 +79,9 @@ router.get('/apply-post/:postId', async (req, res) => {
     const allPosts = await Post.find();
     allPosts.forEach(async (item, index) => {
       completePosts[index] = item;
-      completePosts[index].profile = await Candidate.findById(item.authorId);
+      completePosts[index].profileCandidate = await Candidate.findById(item.authorId);
+      completePosts[index].profileCompany = await Company.findById(item.authorId);
+  
       return completePosts[index];
     });
 
