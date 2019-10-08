@@ -90,7 +90,12 @@
         <div class="post-container">
           <div class="post-container__profile">
             <div class="imgProfile">
-                <img src={{profile.imagePerfil}} alt={{profile.name}} class="img-perfil-post">
+              {{#if profileCandidate}}
+                <img src={{profileCandidate.imagePerfil}} alt={{profileCandidate.name}} class="img-perfil-post">
+              {{/if}}
+              {{#if profileCompany}}
+                <img src={{profileCompany.imagePerfil}} alt={{profileCompany.name}} class="img-perfil-post">
+              {{/if}}
             </div>
             <div class="txtProfile">
                 <p>{{profile.name}}</p>

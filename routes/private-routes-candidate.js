@@ -13,7 +13,8 @@ router.get('/home', async (req, res) => {
   const allPosts = await Post.find().sort([['date', -1]]);
   allPosts.forEach(async (item, index) => {
     completePosts[index] = item;
-    completePosts[index].profile = await Candidate.findById(item.authorId);
+    completePosts[index].profileCandidate = await Candidate.findById(item.authorId);
+    completePosts[index].profileCompany = await Company.findById(item.authorId);
     //Handlebars
     const applysInfo = completePosts[index].candidatesId.split(',');
 
