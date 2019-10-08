@@ -52,3 +52,150 @@
   <a href="/home">Home</a>
 
 </div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="wrap-main">
+  <div class="nav-bar">
+    <a href="/home" class="logo">
+      <img src="/images/logo.png" alt="MobJobs">
+    </a>
+    <div id="search-container" class="search-container">
+      <input type="text" placeholder="Filtre aqui pessoas ou páginas" class="txtBoxSearch">
+      <a href=""><img src="/images/search.svg" class="lnk-search"></a>
+      <img src="/images/close.svg" id="lnk-close" class="lnk-close">
+    </div>
+    <ul class="icons-container">
+      <li>
+        <a href="" class="icon" id="search_icon_responsive">
+          <img src="/images/search_white.svg" alt="Conferência" class="icons-container__icon">
+          <span class="icons-container__text">Fazer conferência</span>
+        </a>
+      </li>
+      <li>
+        <a href="" class="icon">
+          <img src="/images/conf.svg" alt="Conferência" class="icons-container__icon">
+          <span class="icons-container__text">Fazer conferência</span>
+        </a>
+      </li>
+      <li>
+        <a href="" class="icon">
+          <img src="/images/friendship.svg" alt="Solicitação de amizade" class="icons-container__icon">
+          <span class="icons-container__text">Solicitação de amizades</span>
+        </a>
+      </li>
+      <li>
+        <a href="" class="icon">
+          <img src="/images/message.svg" alt="Mensagem" class="icons-container__icon">
+          <span class="icons-container__text">Solicitação de amizades</span>
+        </a>
+      </li>
+      <li>
+        <a href="" class="icon">
+          <img src="/images/notification.svg" alt="Notificações" class="icons-container__icon">
+          <span class="icons-container__text">Solicitação de amizades</span>
+        </a>
+      </li>
+    </ul>
+    <div class="profile-container">
+      {{#if perfilCompany.imagePerfil}}
+        <img src={{perfilCompany.imagePerfil}} alt={{perfilCompany.name}} class="photo-profile">
+      {{/if}}
+      {{#if perfilCompany.imagePerfil}}
+        <img src={{perfilCompany.imagePerfil}} alt={{perfilCompany.name}} class="photo-profile">
+      {{/if}}
+      <div class="container-profile_name_lnk">
+        {{#if perfilCompany.name}}
+          <p>{{perfilCompany.name}}</p>
+        {{/if}}
+        {{#if perfilCompany.name}}
+          <p>{{perfilCompany.name}}</p>
+        {{/if}}
+        
+        <ul class="lnks-profile">
+          <li><a href="/perfil-Company" class="lnk-profile">Perfil</a></li>
+          <li><a href="/" class="lnk-profile">Logout</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  <div class="content">
+    <div class="middle-column">      
+      <div class="container__create-container">
+      {{#if perfilCompany.imagePerfil}}
+        <img src={{perfilCompany.imagePerfil}} alt={{perfilCompany.name}} class="img-perfil-post">
+      {{/if}}
+      {{#if perfilCompany.imagePerfil}}
+        <img src={{perfilCompany.imagePerfil}} alt={{perfilCompany.name}} class="img-perfil-post">
+      {{/if}}
+        <form action="/post" class="container-addPost" method="POST" enctype="multipart/form-data">
+          <textarea name="message" placeholder="Compartilhe o seu momento..." class="txtArea-post"></textarea>
+          <div class="container-submit-post">
+            <button type="submit" class="btnSubmit-post">Enviar</button>
+            <label for='imageUrl' class="imageUrl"></label>
+            <input type="file" id="imageUrl" name="imageUrl" placeholder="Insira imagem" class="upload-post">
+          </div>
+        </form>
+        {{#if errorMessage}}
+        <p>{{errorMessage}}</p>
+        {{/if}}
+      </div>
+      <div class="container-post">
+        {{#each complete}}
+        <div class="post-container">
+          <div class="post-container__profile">
+            <div class="imgProfile">
+              {{#if profileCompany}}
+                <img src={{profileCompany.imagePerfil}} alt={{profileCompany.name}} class="img-perfil-post">
+              {{/if}}
+              {{#if profileCompany}}
+                <img src={{profileCompany.imagePerfil}} alt={{profileCompany.name}} class="img-perfil-post">
+              {{/if}}
+            </div>
+            <div class="txtProfile">
+              {{#if profileCompany}}
+                <p class="txtProfile__profile-name">{{profileCompany.name}}</p>
+                <p class="txtProfile__profile-data">{{date}}</p>
+              {{/if}}
+              {{#if profileCompany}}
+                <p class="txtProfile__profile-name">{{profileCompany.name}}</p>
+                <p class="txtProfile__profile-data">{{date}}</p>
+              {{/if}}
+            </div>
+          </div>
+          <div class="post-container__post">
+            <img src="{{ image }}" class="post-container__img">
+            <p class="post-container__txt">{{ message }}</p>
+          </div>
+          <div class="post-container__actions">
+            
+            <a href="/apply-post/{{_id}}"class="post-container__actions-frm">
+              {{#if apply}}
+                <p>Aguarde, sua candidatura esta sendo avaliada</p>
+              {{/if}}
+              {{#unless apply}}
+                <p>Candidatar-se</p>
+              {{/unless}}
+            </a>
+            <a href="/comment-post/{{_id}}" class="post-container__actions-frm">
+              Comentar
+            </a>
+            <a href="/share-post/{{_id}}" class="post-container__actions-frm">
+              Compartilhar
+            </a>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>

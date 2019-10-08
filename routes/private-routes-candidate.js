@@ -79,6 +79,7 @@ router.get('/apply-post/:postId', async (req, res) => {
     const allPosts = await Post.find();
     allPosts.forEach(async (item, index) => {
       completePosts[index] = item;
+      completePosts[index].profile = await Candidate.findById(item.authorId);
       completePosts[index].profileCandidate = await Candidate.findById(item.authorId);
       completePosts[index].profileCompany = await Company.findById(item.authorId);
   
