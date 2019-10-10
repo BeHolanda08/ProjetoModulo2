@@ -43,10 +43,10 @@
     </ul>
     <div class="profile-container">
       {{#if perfilCandidate.imagePerfil}}
-        <img src={{perfilCandidate.imagePerfil}} alt={{perfilCandidate.name}} class="photo-profile">
+        <img src={{perfilCandidate.imagePerfil}} class="photo-profile">
       {{/if}}
       {{#if perfilCompany.imagePerfil}}
-        <img src={{perfilCompany.imagePerfil}} alt={{perfilCompany.name}} class="photo-profile">
+        <img src={{perfilCompany.imagePerfil}} class="photo-profile">
       {{/if}}
       <div class="container-profile_name_lnk">
         {{#if perfilCandidate.name}}
@@ -76,10 +76,10 @@
     <div class="middle-column">      
       <div class="container__create-container">
       {{#if perfilCandidate.imagePerfil}}
-        <img src={{perfilCandidate.imagePerfil}} alt={{perfilCandidate.name}} class="img-perfil-post">
+        <img src={{perfilCandidate.imagePerfil}} class="img-perfil-post">
       {{/if}}
       {{#if perfilCompany.imagePerfil}}
-        <img src={{perfilCompany.imagePerfil}} alt={{perfilCompany.name}} class="img-perfil-post">
+        <img src={{perfilCompany.imagePerfil}} class="img-perfil-post">
       {{/if}}
         <form action="/post" class="container-addPost" method="POST" enctype="multipart/form-data">
           <textarea name="message" placeholder="Compartilhe o seu momento..." class="txtArea-post"></textarea>
@@ -99,10 +99,10 @@
           <div class="post-container__profile">
             <div class="imgProfile">
               {{#if profileCandidate}}
-                <img src={{profileCandidate.imagePerfil}} alt={{profileCandidate.name}} class="img-perfil-post">
+                <img src={{profileCandidate.imagePerfil}} class="img-perfil-post">
               {{/if}}
               {{#if profileCompany}}
-                <img src={{profileCompany.imagePerfil}} alt={{profileCompany.name}} class="img-perfil-post">
+                <img src={{profileCompany.imagePerfil}} class="img-perfil-post">
               {{/if}}
             </div>
             <div class="txtProfile">
