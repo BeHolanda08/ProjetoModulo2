@@ -40,7 +40,7 @@
     </li>
   </ul>
   <div class="profile-container">
-    <img src={{perfil.imagePerfil}} alt={{perfil.name}} class="photo-profile">
+    <img src={{perfil.imagePerfil}} class="photo-profile">
     <div class="container-profile_name_lnk">
       <p>{{perfil.name}}</p>
 
@@ -55,7 +55,7 @@
 </div>
 <div class="content-profile">
   <div class="imageCapa" style="background-image: url({{perfil.imageCapa}})">
-    <img src="{{ perfil.imagePerfil }}" name="imagePerfil" alt="{{ perfil.name }}" class="imagePerfil">
+    <img src="{{ perfil.imagePerfil }}" name="imagePerfil" class="imagePerfil">
     <p class="nameProfile">{{ perfil.name }} {{ perfil.surname }}</p>
   </div>
   <ul class="links-container">
@@ -90,7 +90,7 @@
     </div>
     <div class="content-column">
       <div class="container__create-container">
-        <img src={{perfil.imagePerfil}} alt={{perfil.name}} class="img-perfil-post">
+        <img src={{perfil.imagePerfil}} class="img-perfil-post">
         <form action="/post" class="container-addPost" method="POST" enctype="multipart/form-data">
           <textarea name="message" placeholder="Compartilhe o seu momento..." class="txtArea-post"></textarea>
           <div class="container-submit-post">
