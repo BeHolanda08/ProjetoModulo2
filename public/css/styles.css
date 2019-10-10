@@ -148,6 +148,8 @@ img.ico-lnks { width: 40px; }
 .ico-delete{width: 30px;margin-top: 15px;}
 .subtitlePosts{ margin: 20px 0}
 
+.btn-profile{display: flex;margin: auto;}
+
 /* RESPONSIVITY */
 @media(min-width: 1200px){
   .post-container{width: 100%;max-width: 700px;}
