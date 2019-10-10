@@ -10,7 +10,7 @@ const completePosts = [];
 let complete = [];
 
 router.get('/home', async (req, res) => {
-  const allPosts = await Post.find().sort({ date: 'asc' });
+  const allPosts = await Post.find().sort({ date: -1 });
   allPosts.forEach(async (item, index) => {
     completePosts[index] = item;
     completePosts[index].profileCandidate = await Candidate.findById(item.authorId);
@@ -39,8 +39,10 @@ router.get('/perfil-candidate', async (req, res) => {
   // eslint-disable-next-line no-underscore-dangle
   const perfil = await Candidate.findById(req.session.currentUser._id);
   const myPosts = await Post.find({ authorId: req.session.currentUser._id });
-
-  const skills = perfil.skill.split(',');
+  let skills = [];
+  if (perfil.skill !== undefined && perfil.skill.length > 0) {
+    skills = perfil.skill.split(',');
+  }
 
   res.render('perfilCandidate', { perfil, myPosts, skills });
 });
@@ -54,6 +56,10 @@ router.get('/delete-post/:deleteId', async (req, res) => {
 
 router.post('/post', uploadCloud.single('imageUrl'), async (req, res) => {
   const image = req.file.url;
+  let d = new Date();
+  let date = d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear();
+  let time = " - "+d.getHours()+":"+d.getMinutes();
+  date += time;
   const { message } = req.body;
   if (!image || !message) {
     res.render('home', {
@@ -63,7 +69,7 @@ router.post('/post', uploadCloud.single('imageUrl'), async (req, res) => {
   }
 
   const authorId = req.session.currentUser._id;
-  const newPost = new Post({ image, message, authorId });
+  const newPost = new Post({ image, message, authorId, date });
 
   await newPost.save();
 

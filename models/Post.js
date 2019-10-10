@@ -6,7 +6,7 @@ const postSchema = new Schema({
   image: { type: String },
   message: { type: String, required: true },
   authorId: { type: String, required: true },
-  date: { type: Date },
+  date: { type: String },
   link: { type: String },
   candidatesId: { type: String },
   comment: { type: String },
