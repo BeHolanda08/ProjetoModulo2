@@ -98,7 +98,7 @@ router.get('/apply-post/:postId', async (req, res) => {
 router.get('/update-perfil-candidate/:editId', async (req, res) => {
   const perfil = await Candidate.findById(req.session.currentUser._id);
   const updatePerfil = await Candidate.findById(req.params.editId);
-  return res.render('perfilCandidateComplete', {perfil, updatePerfil });
+  return res.render('perfilCandidateComplete', { perfil, updatePerfil });
 });
 
 router.post('/update-perfil-candidate', uploadCloud.fields([

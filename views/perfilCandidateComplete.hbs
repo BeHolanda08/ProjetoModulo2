@@ -40,7 +40,7 @@
     </li>
   </ul>
   <div class="profile-container">
-    <img src={{perfil.imagePerfil}} alt={{perfil.name}} class="photo-profile">
+    <img src={{perfil.imagePerfil}} class="photo-profile">
     <div class="container-profile_name_lnk">
       <p>{{perfil.name}}</p>
 
@@ -75,70 +75,70 @@
   <form action="/update-perfil-candidate" method="POST" enctype="multipart/form-data" class="form-container">
     <div class="input-container">
       <label for="text">Nome</label>
-      <input type="text" class="txtBox" name="name" placeholder="Nome" value="{{ name }}">
+      <input type="text" class="txtBox" name="name" placeholder="Nome" value="{{ perfil.name }}">
     </div>
     <div class="input-container">
       <label for="text">Sobrenome</label>
-      <input type="text" class="txtBox" name="surname" placeholder="Sobrenome" value="{{surname}}">
+      <input type="text" class="txtBox" name="surname" placeholder="Sobrenome" value="{{perfil.surname}}">
     </div>
     <div class="input-container">
       <label for="text">Celular</label>
       <input type="text" class="txtBox" name="celPhone" placeholder="Ex.: (00) 00000-0000" maxlength="11" autocomplete="off"
-        value="{{ celPhone }}">
+        value="{{ perfil.celPhone }}">
     </div>
     <div class="input-container">
       <label for="text">Imagem Perfil</label>
-      <input type="file" name="imagePerfil" placeholder="Imagem Perfil" value="{{ imagePerfil }}">
+      <input type="file" name="imagePerfil" placeholder="Imagem Perfil" value="{{ perfil.imagePerfil }}">
       {{!-- <img src="{{ imagePerfil }}" width="120px" /> --}}
     </div>
     <div class="input-container">
       <label for="text">Imagem Capa</label>
-      <input type="file" name="imageCapa" placeholder="Imagem Capa" value="{{ imageCapa }}">
+      <input type="file" name="imageCapa" placeholder="Imagem Capa" value="{{ perfil.imageCapa }}">
       {{!-- <img src="{{ imageCapa }}" width="120px" /> --}}
     </div>
     <div class="input-container">
       <label for="text">Habilidades</label>
-      <input type="text" class="txtBox" name="skill" placeholder="Habilidades" value="{{ skill }}">
+      <input type="text" class="txtBox" name="skill" placeholder="Habilidades" value="{{ perfil.skill }}">
     </div>
     <div class="input-container">
       <label for="text">Endereço</label>
-      <input type="text" class="txtBox" name="address" placeholder="Endereço" value="{{ address }}">
+      <input type="text" class="txtBox" name="address" placeholder="Endereço" value="{{ perfil.address }}">
     </div>
     <div class="input-container">
       <label for="text">Número</label>
-      <input type="number" class="txtBox" name="number" placeholder="Número" value="{{ number }}">
+      <input type="number" class="txtBox" name="number" placeholder="Número" value="{{ perfil.number }}">
     </div>
     <div class="input-container">
       <label for="text">Complemento</label>
-      <input type="text" class="txtBox" name="complement" placeholder="Complemento" value="{{ complement }}">
+      <input type="text" class="txtBox" name="complement" placeholder="Complemento" value="{{ perfil.complement }}">
     </div>
     <div class="input-container">
       <label for="text">Cidade</label>
-      <input type="text" class="txtBox" name="city" placeholder="Cidade" value="{{ city }}">
+      <input type="text" class="txtBox" name="city" placeholder="Cidade" value="{{ perfil.city }}">
     </div>
     <div class="input-container">
       <label for="text">Estado</label>
-      <input type="text" class="txtBox" name="state" placeholder="Estado" value="{{ state }}">
+      <input type="text" class="txtBox" name="state" placeholder="Estado" value="{{ perfil.state }}">
     </div>
     <div class="input-container">
       <label for="text">Cep</label>
-      <input type="text" class="txtBox" name="zipCode" placeholder="Cep" value="{{ zipCode }}">
+      <input type="text" class="txtBox" name="zipCode" placeholder="Cep" value="{{ perfil.zipCode }}">
     </div>
     <div class="input-container">
       <label for="text">Link</label>
-      <input type="text" class="txtBox" name="link1" placeholder="Linkedin" value="{{ link1 }}">
+      <input type="text" class="txtBox" name="link1" placeholder="Linkedin" value="{{ perfil.link1 }}">
     </div>
     <div class="input-container">
       <label for="text">Link</label>
-      <input type="text" class="txtBox" name="link2" placeholder="Link Intagram" value="{{ link2 }}">
+      <input type="text" class="txtBox" name="link2" placeholder="Link Intagram" value="{{ perfil.link2 }}">
     </div>
     <div class="input-container">
       <label for="text">Link</label>
-      <input type="text" class="txtBox" name="link3" placeholder="Link Facebook" value="{{ link3 }}">
+      <input type="text" class="txtBox" name="link3" placeholder="Link Facebook" value="{{ perfil.link3 }}">
     </div>
     <div class="input-container">
       <label for="text">Link</label>
-      <input type="text" class="txtBox" name="link4" placeholder="GitHub" value="{{ link4 }}">
+      <input type="text" class="txtBox" name="link4" placeholder="GitHub" value="{{ perfil.link4 }}">
     </div>
 
     <button type="submit" class="btn btnSubmit btn-profile">Confirmar</button>
