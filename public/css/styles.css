@@ -145,12 +145,14 @@ html, body{height: 100%;min-height: 100%;}
 img.ico-lnks { width: 40px; }
 .info-column ul{ list-style: none }
 .info-column ul li{  }
-.ico-delete{ width: 30px }
+.ico-delete{width: 30px;margin-top: 15px;}
+.subtitlePosts{ margin: 20px 0}
 
+.btn-profile{display: flex;margin: auto;}
 
 /* RESPONSIVITY */
 @media(min-width: 1200px){
-  .post-container{ width: 32%; }
+  .post-container{width: 100%;max-width: 700px;}
 }
 @media(max-width: 1200px){
   .input-container__email .input-container{ width: 63%; }
