@@ -10,7 +10,7 @@ const completePosts = [];
 let complete = [];
 
 router.get('/home', async (req, res) => {
-  const allPosts = await Post.find().sort([['date', -1]]);
+  const allPosts = await Post.find().sort({ date: 'asc' });
   allPosts.forEach(async (item, index) => {
     completePosts[index] = item;
     completePosts[index].profileCandidate = await Candidate.findById(item.authorId);
@@ -39,7 +39,10 @@ router.get('/perfil-candidate', async (req, res) => {
   // eslint-disable-next-line no-underscore-dangle
   const perfil = await Candidate.findById(req.session.currentUser._id);
   const myPosts = await Post.find({ authorId: req.session.currentUser._id });
-  res.render('perfilCandidate', { perfil, myPosts });
+
+  const skills = perfil.skill.split(',');
+
+  res.render('perfilCandidate', { perfil, myPosts, skills });
 });
 
 router.get('/delete-post/:deleteId', async (req, res) => {
@@ -75,130 +78,27 @@ router.get('/apply-post/:postId', async (req, res) => {
     const filter = { candidatesId: undefined };
     const update = { candidatesId: req.session.currentUser._id };
     await Post.updateOne( filter, update);
-    //Recarrega a página
-    const allPosts = await Post.find();
-    allPosts.forEach(async (item, index) => {
-      completePosts[index] = item;
-      completePosts[index].profile = await Candidate.findById(item.authorId);
-      completePosts[index].profileCandidate = await Candidate.findById(item.authorId);
-      completePosts[index].profileCompany = await Company.findById(item.authorId);
-  
-      return completePosts[index];
-    });
 
-    complete = completePosts;
-
-    const perfilCandidate = await Candidate.findById(req.session.currentUser._id);
-    const perfilCompany = await Company.findById(req.session.currentUser._id);
-
-    res.send('home', { perfilCandidate, perfilCompany, complete });
+    res.redirect('/home');
   } else if (selectedPost.candidatesId !== req.session.currentUser._id) {
-    //Realiza a candidatura do Candidato se os ids cadastrados forem diferentes
     const filter = { candidatesId: selectedPost.candidatesId };
     const update = { candidatesId: `${selectedPost.candidatesId},${req.session.currentUser._id}` };
     await Post.updateOne( filter, update);
-    //Recarrega a página
-    const allPosts = await Post.find();
-    allPosts.forEach(async (item, index) => {
-      completePosts[index] = item;
-      completePosts[index].profile = await Candidate.findById(item.authorId);
-      return completePosts[index];
-    });
 
-    complete = completePosts;
-
-    const perfilCandidate = await Candidate.findById(req.session.currentUser._id);
-    const perfilCompany = await Company.findById(req.session.currentUser._id);
-
-    res.send('home', { perfilCandidate, perfilCompany, complete });
+    res.redirect('/home');
   } else {
-      //retira a candidatura do Candidato se os ids cadastrados forem diferentes
     const filter = { candidatesId: req.session.currentUser._id };
     const update = { candidatesId: undefined };
     await Post.updateOne( filter, update);
-    //Recarrega a página
-    const allPosts = await Post.find();
-    allPosts.forEach(async (item, index) => {
-      completePosts[index] = item;
-      completePosts[index].profile = await Candidate.findById(item.authorId);
-      return completePosts[index];
-    });
 
-    complete = completePosts;
-
-    const perfilCandidate = await Candidate.findById(req.session.currentUser._id);
-    const perfilCompany = await Company.findById(req.session.currentUser._id);
-
-    res.send('home', { perfilCandidate, perfilCompany, complete });
-  }
-});
-
-router.get('/message-post/:postId', async (req, res) => {
-  const selectedPost = await Post.findById(req.params.postId);
-
-  if (!selectedPost.candidatesId) {
-    //Realiza a candidatura do Candidato
-    const filter = { candidatesId: undefined };
-    const update = { candidatesId: req.session.currentUser._id };
-    await Post.updateOne( filter, update);
-    //Recarrega a página
-    const allPosts = await Post.find();
-    allPosts.forEach(async (item, index) => {
-      completePosts[index] = item;
-      completePosts[index].profile = await Candidate.findById(item.authorId);
-      return completePosts[index];
-    });
-
-    complete = completePosts;
-
-    const perfilCandidate = await Candidate.findById(req.session.currentUser._id);
-    const perfilCompany = await Company.findById(req.session.currentUser._id);
-
-    res.send('home', { perfilCandidate, perfilCompany, complete });
-  } else if (selectedPost.candidatesId !== req.session.currentUser._id) {
-    //Realiza a candidatura do Candidato se os ids cadastrados forem diferentes
-    const filter = { candidatesId: selectedPost.candidatesId };
-    const update = { candidatesId: `${selectedPost.candidatesId},${req.session.currentUser._id}` };
-    await Post.updateOne( filter, update);
-    //Recarrega a página
-    const allPosts = await Post.find();
-    allPosts.forEach(async (item, index) => {
-      completePosts[index] = item;
-      completePosts[index].profile = await Candidate.findById(item.authorId);
-      return completePosts[index];
-    });
-
-    complete = completePosts;
-
-    const perfilCandidate = await Candidate.findById(req.session.currentUser._id);
-    const perfilCompany = await Company.findById(req.session.currentUser._id);
-
-    res.send('home', { perfilCandidate, perfilCompany, complete });
-  } else {
-      //retira a candidatura do Candidato se os ids cadastrados forem diferentes
-    const filter = { candidatesId: req.session.currentUser._id };
-    const update = { candidatesId: undefined };
-    await Post.updateOne( filter, update);
-    //Recarrega a página
-    const allPosts = await Post.find();
-    allPosts.forEach(async (item, index) => {
-      completePosts[index] = item;
-      completePosts[index].profile = await Candidate.findById(item.authorId);
-      return completePosts[index];
-    });
-
-    complete = completePosts;
-
-    const perfilCandidate = await Candidate.findById(req.session.currentUser._id);
-    const perfilCompany = await Company.findById(req.session.currentUser._id);
-
-    res.send('home', { perfilCandidate, perfilCompany, complete });
+    res.redirect('/home');
   }
 });
 
 router.get('/update-perfil-candidate/:editId', async (req, res) => {
+  const perfil = await Candidate.findById(req.session.currentUser._id);
   const updatePerfil = await Candidate.findById(req.params.editId);
-  return res.render('perfilCandidateComplete', updatePerfil);
+  return res.render('perfilCandidateComplete', {perfil, updatePerfil });
 });
 
 router.post('/update-perfil-candidate', uploadCloud.fields([

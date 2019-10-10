@@ -44,9 +44,10 @@
     <div class="container-profile_name_lnk">
       <p>{{perfil.name}}</p>
 
-      <ul class="lnks-profile">
-        <li><a href="/update-perfil-candidate/{{perfil._id}}" class="lnk-profile">Editar perfil</a></li>
-        <li><a href="/" class="lnk-profile">Logout</a></li>
+      <ul class="lnks-profile lnks-profile-new">
+        <li><a href="/update-perfil-candidate/{{perfil._id}}" class="lnk-profile">Editar</a></li>
+        <li><a href="/home" class="lnk-profile">Home</a></li>
+        <li><a href="/" class="lnk-profile">Sair</a></li>
       </ul>
     </div>
 
@@ -55,12 +56,21 @@
 <div class="content-profile">
   <div class="imageCapa" style="background-image: url({{perfil.imageCapa}})">
     <img src="{{ perfil.imagePerfil }}" name="imagePerfil" alt="{{ perfil.name }}" class="imagePerfil">
+    <p class="nameProfile">{{ perfil.name }} {{ perfil.surname }}</p>
   </div>
   <ul class="links-container">
-    <li>{{ perfil.link1 }}</li>
-    <li>{{ perfil.link2 }}</li>
-    <li>{{ perfil.link3 }}</li>
-    <li>{{ perfil.link4 }}</li>
+    {{#if perfil.link1}}
+      <li><a href={{ perfil.link1 }} target="_blank"><img src="/images/linkedin.svg" alt="" class="ico-lnks"></a></li>
+    {{/if}}
+    {{#if perfil.link2}}
+      <li><a href={{ perfil.link2 }} target="_blank"><img src="/images/domain.svg" alt="" class="ico-lnks"></a></li>
+    {{/if}}
+    {{#if perfil.link3}}
+      <li><a href={{ perfil.link3 }} target="_blank"><img src="/images/facebook.svg" alt="" class="ico-lnks"></a></li>
+    {{/if}}
+    {{#if perfil.link4}}
+      <li><a href={{ perfil.link4 }} target="_blank"><img src="/images/github.svg" alt="" class="ico-lnks"></a></li>
+    {{/if}}
   </ul>
   <ul class="sub-menu-profile">
     <li><a href="/perfil-candidate" class="lnk-subMenuProfile">Compartilhe</a></li>
@@ -71,32 +81,16 @@
   <!-- <img src="{{ perfil.imageCapa }}" name="imageCapa" alt="Foto de capa" class="imageCapa"> -->
   <div class="profile-content">
     <div class="info-column">
-      <h2>Informações Profissionais</h2>
+      <h2>Habilidades</h2>
       <ul>
-        <li>{{ perfil.name }}</li>
-        <li>{{ perfil.surname }}</li>
-        <li>{{ perfil.celPhone }}</li>
-        <li>{{ perfil.skill }}</li>
-        <li>{{ perfil.address }}</li>
-        <li>{{ perfil.number }}</li>
-        <li>{{ perfil.complement }}</li>
-        <li>{{ perfil.zipCode }}</li>
-        <li>{{ perfil.city }}</li>
-        <li>{{ perfil.state }}</li>
-        <li>{{ perfil.link1 }}</li>
-        <li>{{ perfil.link2 }}</li>
-        <li>{{ perfil.link3 }}</li>
-        <li>{{ perfil.link4 }}</li>
+        {{#each skills}}
+          <li class="cloudSkills">{{ this.skills }}</li>
+        {{/each}}
       </ul>
     </div>
     <div class="content-column">
       <div class="container__create-container">
-        {{#if perfil.imagePerfil}}
         <img src={{perfil.imagePerfil}} alt={{perfil.name}} class="img-perfil-post">
-        {{/if}}
-        {{#if perfilCompany.imagePerfil}}
-        <img src={{perfilCompany.imagePerfil}} alt={{perfilCompany.name}} class="img-perfil-post">
-        {{/if}}
         <form action="/post" class="container-addPost" method="POST" enctype="multipart/form-data">
           <textarea name="message" placeholder="Compartilhe o seu momento..." class="txtArea-post"></textarea>
           <div class="container-submit-post">
@@ -110,25 +104,25 @@
         {{/if}}
       </div>
 
-      <br>
-      <a href="/update-perfil-candidate/{{perfil._id}}">Editar perfil</a>
-      <a href="/home">Home</a>
-
-
-
       <h3>Post</h3>
       {{#each myPosts}}
       <div class="post-container">
-        <img src="{{ imagePerfil }}" width="10" height="10">
-        <img src="{{ image }}" width="200" height="100">
-        <p>{{ message }}</p>
-        <p></p>
-        <a href="/delete-post/{{_id}}">Deletar</a>
+        <div class="post-container__profile">
+         <!--  <div class="imgProfile">
+              <img src={{perfilCandidate.imagePerfil}} alt={{perfil.name}} class="img-perfil-post">
+          </div> -->
+          <div class="txtProfile">
+                <p class="txtProfile__profile-name">{{perfil.name}}</p>
+                <p class="txtProfile__profile-data">{{perfil.date}}</p>
+          </div>
+        </div>
+        <div class="post-container__post">
+          <img src="{{ image }}" class="post-container__img">
+          <p class="post-container__txt">{{ message }}</p>
+        </div>
+        <a href="/delete-post/{{_id}}"><img src="/images/delete.svg" alt="delete" class="ico-delete"></a>
       </div>
       {{/each}}
-
-      <a href="/update-perfil-candidate/{{perfil._id}}">Editar perfil</a>
-      <a href="/home">Home</a>
 
     </div>
   </div>

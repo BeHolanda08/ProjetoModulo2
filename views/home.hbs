@@ -56,10 +56,18 @@
           <p>{{perfilCompany.name}}</p>
         {{/if}}
         
+        {{#if perfilCandidate}}
         <ul class="lnks-profile">
           <li><a href="/perfil-candidate" class="lnk-profile">Perfil</a></li>
-          <li><a href="/" class="lnk-profile">Logout</a></li>
+          <li><a href="/" class="lnk-profile">Sair</a></li>
         </ul>
+        {{/if}}
+        {{#if perfilCompany}}
+        <ul class="lnks-profile">
+          <li><a href="/perfil-company" class="lnk-profile">Perfil</a></li>
+          <li><a href="/" class="lnk-profile">Sair</a></li>
+        </ul>
+        {{/if}}   
       </div>
 
     </div>
